@@ -88,3 +88,5 @@ production:
   password: <%= ENV['RDS_PASSWORD'] %>
   port: <%= ENV['RDS_PORT'] %>
   username: <%= ENV['RDS_USERNAME'] %>
+  adapter: postgresql
+  encoding: unicode
