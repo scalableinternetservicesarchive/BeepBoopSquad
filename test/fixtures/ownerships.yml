@@ -3,7 +3,7 @@
 # Table name: ownerships
 #
 #  id         :bigint           not null, primary key
-#  num_shares :integer
+#  num_shares :bigint
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  stock_id   :bigint           not null

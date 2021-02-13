@@ -4,8 +4,8 @@
 #
 #  id          :bigint           not null, primary key
 #  name        :string
+#  share_price :bigint
 #  symbol      :string
-#  share_price :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #

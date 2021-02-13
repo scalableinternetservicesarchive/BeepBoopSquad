@@ -3,8 +3,8 @@
 # Table name: users
 #
 #  id           :bigint           not null, primary key
+#  cash_balance :bigint
 #  name         :string
-#  cash_balance :integer
 #  password     :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
