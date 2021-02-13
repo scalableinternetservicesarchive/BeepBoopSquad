@@ -7,17 +7,12 @@
 
 <p>
   <strong>Type:</strong>
-  <%= @exchange.type %>
+  <%= @exchange.exchange_type %>
 </p>
 
 <p>
   <strong>Amount:</strong>
   <%= @exchange.amount %>
-</p>
-
-<p>
-  <strong>Exchange date:</strong>
-  <%= @exchange.exchange_date %>
 </p>
 
 <%= link_to 'Edit', edit_exchange_path(@exchange) %> |

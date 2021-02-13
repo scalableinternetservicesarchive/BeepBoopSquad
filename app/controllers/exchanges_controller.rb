@@ -64,6 +64,6 @@ class ExchangesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def exchange_params
-      params.require(:exchange).permit(:user_id, :type, :amount, :exchange_date)
+      params.require(:exchange).permit(:user_id, :type, :amount)
     end
 end
