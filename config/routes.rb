@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :transactions
   resources :portfolio_value_histories
   resources :exchanges
   resources :ownerships

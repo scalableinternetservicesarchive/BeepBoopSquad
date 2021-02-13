@@ -52,6 +52,19 @@ ActiveRecord::Schema.define(version: 2021_02_13_045650) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "stock_id", null: false
+    t.datetime "transaction_date"
+    t.bigint "cost_per_share"
+    t.bigint "num_shares"
+    t.string "type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stock_id"], name: "index_transactions_on_stock_id"
+    t.index ["user_id"], name: "index_transactions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.integer "cash_balance"
@@ -63,4 +76,7 @@ ActiveRecord::Schema.define(version: 2021_02_13_045650) do
   add_foreign_key "exchanges", "users"
   add_foreign_key "ownerships", "stocks"
   add_foreign_key "ownerships", "users"
+  add_foreign_key "portfolio_value_histories", "users"
+  add_foreign_key "transactions", "stocks"
+  add_foreign_key "transactions", "users"
 end
