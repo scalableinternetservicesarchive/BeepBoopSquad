@@ -5,7 +5,7 @@
 #  id            :bigint           not null, primary key
 #  amount        :bigint
 #  exchange_date :datetime
-#  type          :string
+#  type          :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  user_id       :bigint           not null
