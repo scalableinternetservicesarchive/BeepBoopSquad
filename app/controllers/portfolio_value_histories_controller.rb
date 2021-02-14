@@ -1,0 +1,2 @@
+class PortfolioValueHistoriesController < ApplicationController
+end
