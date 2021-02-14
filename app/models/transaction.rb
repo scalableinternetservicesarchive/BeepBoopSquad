@@ -2,14 +2,14 @@
 #
 # Table name: transactions
 #
-#  id             :bigint           not null, primary key
-#  cost_per_share :bigint
-#  num_shares     :bigint
-#  type           :string
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  stock_id       :bigint           not null
-#  user_id        :bigint           not null
+#  id               :bigint           not null, primary key
+#  cost_per_share   :bigint
+#  num_shares       :bigint
+#  transaction_type :integer
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  stock_id         :bigint           not null
+#  user_id          :bigint           not null
 #
 # Indexes
 #
@@ -24,4 +24,5 @@
 class Transaction < ApplicationRecord
   belongs_to :user
   belongs_to :stock
+  enum transaction_type: [:buy, :sell]
 end
