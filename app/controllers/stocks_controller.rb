@@ -22,7 +22,24 @@ class StocksController < ApplicationController
   # POST /stocks or /stocks.json
   def create
     @stock = Stock.new(stock_params)
-
+    puts params[:commit]
+    if params[:commit] == "Submit"
+      # Normal Submit
+    elsif params[:commit] == "Generate from API"
+      require "net/http"
+      require "uri"
+      url = URI.parse('https://data.alpaca.markets/v1/last_quote/stocks/' + params[:stock][:symbol])
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true #need for HTTPS
+      req = Net::HTTP::Get.new(url.request_uri)
+      req['APCA-API-KEY-ID'] = ENV['APCA-API-KEY-ID']
+      req['APCA-API-SECRET-KEY'] = ENV['APCA-API-SECRET-KEY']
+      req['Accept'] = 'application/json'
+      response = http.request(req)
+      response_json = JSON.parse(response.body)
+      @stock.share_price = response_json['last']['bidprice'] #this will be a float, must migrate stock to float
+      # curl API
+    end
     respond_to do |format|
       if @stock.save
         format.html { redirect_to @stock, notice: "Stock was successfully created." }
