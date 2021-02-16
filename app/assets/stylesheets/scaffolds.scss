@@ -1,33 +1,47 @@
+div[class^='profiler-'], div[class*=' profiler-']{
+    background-color: #282c34 !important;
+    color: white !important;
+}
+
 body {
   background-color: #fff;
+  background-color: #282c34;
+  font-family: 'Open Sans', sans-serif;
   color: #333;
   margin: 33px; }
 
 body, p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
+  /*font-family: verdana, arial, helvetica, sans-serif;*/
+  font-family: 'Open Sans', sans-serif;
   font-size: 13px;
   line-height: 18px; }
 
 pre {
   background-color: #eee;
+  background-color: #282c34;
   padding: 10px;
   font-size: 11px; }
 
 a {
-  color: #000; }
+  color: #000;
+  color: #abd3ed; }
 
 a:visited {
-  color: #666; }
+  color: #666; 
+  color: #6dbbed;}
 
 a:hover {
   color: #fff;
-  background-color: #000; }
+  background-color: #000; 
+  background-color: #282c34; }
 
 th {
-  padding-bottom: 5px; }
+  padding-bottom: 5px;
+}
 
 td {
-  padding: 0 5px 7px; }
+  padding: 0 5px 7px; 
+}
 
 div.field,
 div.actions {
