@@ -4,7 +4,7 @@
 #
 #  id          :bigint           not null, primary key
 #  name        :string
-#  share_price :float
+#  share_price :decimal(15, 2)
 #  symbol      :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

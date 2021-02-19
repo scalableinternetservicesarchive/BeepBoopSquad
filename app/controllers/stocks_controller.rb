@@ -1,3 +1,6 @@
+require "net/http"
+require "uri"
+
 class StocksController < ApplicationController
   before_action :set_stock, only: %i[ show edit update destroy ]
 
@@ -26,8 +29,6 @@ class StocksController < ApplicationController
     if params[:commit] == "Submit"
       # Normal Submit
     elsif params[:commit] == "Generate from API"
-      require "net/http"
-      require "uri"
       url = URI.parse('https://data.alpaca.markets/v1/last_quote/stocks/' + params[:stock][:symbol])
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true #need for HTTPS
@@ -37,7 +38,7 @@ class StocksController < ApplicationController
       req['Accept'] = 'application/json'
       response = http.request(req)
       response_json = JSON.parse(response.body)
-      @stock.share_price = response_json['last']['bidprice'] #this will be a float, must migrate stock to float
+      @stock.share_price = response_json['last']['bidprice']
       # curl API
     end
     respond_to do |format|

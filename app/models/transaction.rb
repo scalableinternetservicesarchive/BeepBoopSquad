@@ -3,7 +3,7 @@
 # Table name: transactions
 #
 #  id               :bigint           not null, primary key
-#  cost_per_share   :bigint
+#  cost_per_share   :decimal(15, 2)
 #  num_shares       :bigint
 #  transaction_type :integer
 #  created_at       :datetime         not null

@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_071437) do
+ActiveRecord::Schema.define(version: 2021_02_19_223839) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "exchanges", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "amount"
+    t.decimal "amount", precision: 15, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "exchange_type"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_071437) do
   end
 
   create_table "portfolio_value_histories", force: :cascade do |t|
-    t.bigint "portfolio_value"
+    t.decimal "portfolio_value", precision: 15, scale: 2
     t.bigint "user_id", null: false
     t.datetime "date_recorded"
     t.datetime "created_at", precision: 6, null: false
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_071437) do
   create_table "stocks", force: :cascade do |t|
     t.string "name"
     t.string "symbol"
-    t.float "share_price"
+    t.decimal "share_price", precision: 15, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_071437) do
   create_table "transactions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "stock_id", null: false
-    t.bigint "cost_per_share"
+    t.decimal "cost_per_share", precision: 15, scale: 2
     t.bigint "num_shares"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_071437) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.bigint "cash_balance"
+    t.decimal "cash_balance", precision: 15, scale: 2
     t.string "password"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
