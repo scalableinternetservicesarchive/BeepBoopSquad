@@ -5,12 +5,10 @@ class TransactionsController < ApplicationController
   # GET /transactions or /transactions.json
   def index
     @transactions = Transaction.all
-    render json: @transactions
   end
 
   # GET /transactions/1 or /transactions/1.json
   def show
-    render json: Transaction.find(params[:id]).as_json(:include => [:stock])
   end
 
   # POST /transactions or /transactions.json
