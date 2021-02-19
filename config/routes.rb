@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :transactions
+  resources :transactions, only: [:create, :show, :index], defaults: {format: :json}
   resources :portfolio_value_histories
   resources :exchanges
   resources :ownerships
