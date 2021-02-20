@@ -1,6 +1,3 @@
-require "net/http"
-require "uri"
-
 class StocksController < ApplicationController
   before_action :set_stock, only: %i[ show edit update destroy ]
 
