@@ -18,8 +18,8 @@ class UpdateStalePricesJob < BackgroundJob
         current_batch_offset += STOCK_BATCH_SIZE
         sleep(60) # Cope with rate limiting of API
       end
+      request_threads.each &:join
     end
-    request_threads.each &:join
     UpdateStalePricesJob.perform_in(60 * 60) # Schedule next update for an hour from now
   end
 end
