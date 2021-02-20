@@ -3,7 +3,6 @@
 # Table name: portfolio_value_histories
 #
 #  id              :bigint           not null, primary key
-#  date_recorded   :datetime
 #  portfolio_value :decimal(15, 2)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
