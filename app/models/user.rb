@@ -3,7 +3,7 @@
 # Table name: users
 #
 #  id           :bigint           not null, primary key
-#  cash_balance :bigint
+#  cash_balance :decimal(15, 2)
 #  name         :string
 #  password     :string
 #  created_at   :datetime         not null

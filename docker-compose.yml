@@ -12,6 +12,8 @@ services:
       - db
     ports:
       - "3000:3000"
+    env_file:
+      - web-variables.env
     volumes:
       - .:/app:delegated
 version: '3'

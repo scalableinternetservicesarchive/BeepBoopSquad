@@ -22,7 +22,14 @@ class StocksController < ApplicationController
   # POST /stocks or /stocks.json
   def create
     @stock = Stock.new(stock_params)
-
+    if stock_params[:symbol].nil? || stock_params[:symbol].empty?
+      render json: { error: "Missing required stock symbol." }, status: :unprocessable_entity
+    end
+    if params[:commit] == "Submit"
+      # Normal Submit
+    elsif params[:commit] == "Generate from API"
+      @stock.fetch_stock_price
+    end
     respond_to do |format|
       if @stock.save
         format.html { redirect_to @stock, notice: "Stock was successfully created." }
@@ -57,13 +64,14 @@ class StocksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_stock
-      @stock = Stock.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def stock_params
-      params.require(:stock).permit(:name, :symbol, :share_price)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_stock
+    @stock = Stock.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def stock_params
+    params.require(:stock).permit(:name, :symbol, :share_price)
+  end
 end

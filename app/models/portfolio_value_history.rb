@@ -4,7 +4,7 @@
 #
 #  id              :bigint           not null, primary key
 #  date_recorded   :datetime
-#  portfolio_value :bigint
+#  portfolio_value :decimal(15, 2)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  user_id         :bigint           not null

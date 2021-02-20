@@ -58,3 +58,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'bootstrap', '~> 5.0.0.beta1'
 gem 'jquery-rails'
+
+gem 'sucker_punch', '~> 2.0'
+
+gem 'dotenv-rails', groups: [:development, :test]
