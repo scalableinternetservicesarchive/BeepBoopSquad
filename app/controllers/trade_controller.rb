@@ -73,5 +73,4 @@ class TradeController < ApplicationController
 </div>
 
 =end
-
 end
