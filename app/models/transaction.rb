@@ -25,13 +25,45 @@ class Transaction < ApplicationRecord
   belongs_to :user
   belongs_to :stock
   enum transaction_type: [:buy, :sell]
+  validate :user_can_make_transaction
+  after_create :perform_transaction
 
   def user_balance_change
-    type_multiplier = self.sell? ? 1 : -1
-    self.num_shares * self.cost_per_share * type_multiplier
+    num_shares * cost_per_share
   end
 
   def ownership
-    Ownership.find_by user: self.user, stock: self.stock
+    Ownership.find_by user: user, stock: stock
+  end
+
+  def user_can_make_transaction
+    self.cost_per_share = stock.share_price
+    case transaction_type
+    when "buy"
+      if user.cash_balance - user_balance_change < 0
+        errors.add :num_shares, "User's cash balance insufficient to complete the transaction."
+      end
+    when "sell"
+      if ownership.nil? || ownership.num_shares < num_shares
+        errors.add :num_shares, "User does not own enough shares to sell."
+      end
+    else
+      errors.add :transaction_type, "Invalid transaction type. Must be 'buy' or 'sell'."
+    end
+  end
+
+  def perform_transaction
+    ownership_record = ownership
+    case transaction_type
+    when "buy"
+      user.cash_balance -= user_balance_change
+      ownership_record = ownership_record || Ownership.new(user: user, stock: stock, num_shares: 0)
+      ownership_record.num_shares += num_shares
+    when "sell"
+      user.cash_balance += user_balance_change
+      ownership_record.num_shares -= num_shares
+    end
+    user.save
+    ownership_record.save
   end
 end
