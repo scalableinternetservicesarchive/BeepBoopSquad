@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<!-- todo: display username here, when we know which user is logged in -->
+<h1>User</h1>
+
+<p>Current cash balance: <%= @cash %></p>
+<p>Current portfolio value: <%= @portfolio_value %></p>
+
+<!-- todo: add graph for portfolio value -->
+
+<button onclick="window.location.href='/deposit'">Make Deposit</button>
+<button onclick="window.location.href='/withdrawal'">Make Withdrawal</button>
+
+<button onclick="window.location.href='/trade'">Make Trade</button>
+
+<br>
+<br>
+<br>
+
+<h3>List of All Stocks</h3>
+<ul>
+  <% @stocks.each do |stock| %>
+    <li><%= stock.name %> | <%= stock.symbol %> | <%= stock.share_price %></li>
+  <% end %>
+</ul>

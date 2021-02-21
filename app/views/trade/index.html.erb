@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<!-- todo: display username here, when we know which user is logged in -->
+<h1>Make Trade</h1>
+
+<br>
+
+<form>
+  <label for="stockname">Stock to trade:</label>
+  <select id="stockname" name="stockname">
+    <!-- todo: fill this up with stocks the user owns -->
+    <option value="volvo">Volvo</option>
+  </select>
+  <br>
+
+ <label for="tradetype">Trade type:</label>
+  <select id="tradetype" name="tradetype">
+    <option value="buy">Buy</option>
+    <option value="sell">Sell</option>
+  </select>
+  <br>
+
+<label for="amount">Amount to trade:</label>
+  <select id="amount" name="amount">
+    <!-- todo: fill this up with # of the stock the user owns -->
+    <option value="one">1</option>
+  </select>
+  <br>
+  <!-- todo: not sure if this submit goes anywhere lol -->
+  <input type="submit" value="Submit">
+</form>
+
+<button onclick="window.location.href='/'">Back to Home</button>
