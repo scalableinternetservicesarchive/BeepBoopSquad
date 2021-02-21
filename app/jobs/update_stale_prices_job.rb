@@ -1,7 +1,7 @@
 STOCK_BATCH_SIZE = 150 # Just to stay a bit under the rate limit
 
 class UpdateStalePricesJob < BackgroundJob
-  def perform
+  def attempt_job(options)
     request_threads = []
     Stock.transaction do
       current_batch_offset = 0
