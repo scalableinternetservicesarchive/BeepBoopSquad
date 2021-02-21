@@ -13,41 +13,9 @@ class TransactionsController < ApplicationController
 
   # POST /transactions or /transactions.json
   def create
-    user = User.find(transaction_params[:user_id])
-    stock = Stock.find(transaction_params[:stock_id])
-    if user.nil? || stock.nil?
-      return render json: {error: "Specified user or stock did not exist"}, status: :unprocessable_entity
-    end
-    num_shares = transaction_params[:num_shares]
-    transaction_amount = num_shares * stock.share_price
-    ownership_record = Ownership.find_or_initialize_by(stock: stock, user: user)
-    if ownership_record.num_shares.nil?
-      ownership_record.num_shares = 0
-    end
-    @transaction = Transaction.new(cost_per_share: stock.share_price, num_shares: num_shares, stock: stock, user: user)
-
-    case transaction_params[:transaction_type]
-    when "buy"
-      @transaction.transaction_type = :buy
-      if user.cash_balance < transaction_amount
-        return render json: {error: "Not enough money to complete the transaction"}, status: :forbidden
-      end
-      ownership_record.num_shares += num_shares
-      user.cash_balance -= transaction_amount
-    when "sell"
-      @transaction.transaction_type = :sell
-      if ownership_record.num_shares < num_shares
-        return render json: {error: "Not enough shares owned to sell."}, status: :forbidden
-      end
-      ownership_record.num_shares -= num_shares
-      user.cash_balance += transaction_amount
-    else
-      return render json: {error: "Invalid transaction type."}, status: :unprocessable_entity
-    end
-
-
+    @transaction = Transaction.new(transaction_params)
     respond_to do |format|
-      if @transaction.save && user.save && ownership_record.save
+      if @transaction.save
         format.html { redirect_to @transaction, notice: "Transaction was successfully created." }
         format.json { render :show, status: :created, location: @transaction }
       else

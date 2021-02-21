@@ -1,5 +1,5 @@
 class RecordPortfolioValuesJob < BackgroundJob
-  def perform
+  def attempt_job(options)
     PortfolioValueHistory.transaction do
       User.all.each do |user|
         PortfolioValueHistory.create(user: user, portfolio_value: user.portfolio_value)
