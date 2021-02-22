@@ -9,7 +9,11 @@
   <label for="stockname">Stock to trade:</label>
   <select id="stockname" name="stockname">
     <!-- todo: fill this up with stocks the user owns -->
-    <option value="volvo">Volvo</option>
+    <% if current_user %>
+    <% Stock.all.each do |stock| %>
+      <option value="#{stock.symbol}"><%=stock.symbol=%></option>
+    <% end %>
+    <% end %>
   </select>
   <br>
 

@@ -1,0 +1,21 @@
+Datatypes: https://www.postgresql.org/docs/13/datatype-numeric.html
+Request Headers: https://stackoverflow.com/questions/9303147/add-headers-to-a-request-in-rails
+HTTP Request: https://stackoverflow.com/questions/4581075/how-to-make-a-http-request-using-ruby-on-rails
+Ruby Net/HTTP Library Docs: https://ruby-doc.org/stdlib-2.6.5/libdoc/net/http/rdoc/Net/HTTP.html
+Ruby Partials: https://guides.rubyonrails.org/layouts_and_rendering.html
+Form Object/Builder Guide: https://www.ducktypelabs.com/how-to-keep-your-controllers-thin-with-form-objects/
+Rails Migrations: https://www.youtube.com/watch?v=WJxvcvKgiT8&t=257s
+Ruby Form Helper Guide: https://guides.rubyonrails.org/form_helpers.html
+Ruby Respond_to: https://stackoverflow.com/questions/9492362/rails-how-does-the-respond-to-block-work
+Ruby Redirect_to: https://api.rubyonrails.org/v6.1.0/classes/ActionController/Redirecting.html
+Multi-button controller template: https://github.com/gorails-screencasts/gorails-episode-34/blob/master/app/controllers/posts_controller.rb
+Multi-button form template: https://github.com/gorails-screencasts/gorails-episode-34/blob/master/app/views/posts/_form.html.erb
+API-Dock form_with guide: https://apidock.com/rails/ActionView/Helpers/FormHelper/form_with
+RubyGuides HTTP Request: https://www.rubyguides.com/2018/08/ruby-http-request/
+Remove All Containers and Images: https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes
+Alpaca API Docs: https://alpaca.markets/docs/
+Alpaca API Authentication: https://alpaca.markets/docs/api-documentation/api-v2/#authentication
+Alpaca API Market Data: https://alpaca.markets/docs/api-documentation/api-v2/market-data/
+Alpaca API Market Data - Last Quote: https://alpaca.markets/docs/api-documentation/api-v2/market-data/last-quote/
+Alpaca API Rate Limit: https://alpaca.markets/docs/api-documentation/api-v2/#:~:text=There%20is%20a%20rate%20limit,every%20minute%20per%20API%20key.
+Docker ENV variables: https://docs.docker.com/compose/environment-variables/
