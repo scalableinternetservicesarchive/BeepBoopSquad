@@ -13,12 +13,23 @@ class TransactionsController < ApplicationController
 
   # POST /transactions or /transactions.json
   def create
-    user = User.find(transaction_params[:user_id])
-    stock = Stock.find(transaction_params[:stock_id])
+    user = nil
+    if !transaction_params.key?(:user_id) || transaction_params[:user_id].nil?
+      user = User.find(session[:user_id])
+    else
+      user = User.find(user_id)
+    end
+
+    stock = nil
+    if transaction_params[:stock_id].is_a?(String)
+      stock = Stock.find_by_symbol(transaction_params[:stock_id].upcase)
+    else
+      stock = Stock.find(stock_id)
+    end
     if user.nil? || stock.nil?
       return render json: {error: "Specified user or stock did not exist"}, status: :unprocessable_entity
     end
-    num_shares = transaction_params[:num_shares]
+    num_shares = transaction_params[:num_shares].to_i
     transaction_amount = num_shares * stock.share_price
     ownership_record = Ownership.find_or_initialize_by(stock: stock, user: user)
     if ownership_record.num_shares.nil?
@@ -44,7 +55,6 @@ class TransactionsController < ApplicationController
     else
       return render json: {error: "Invalid transaction type."}, status: :unprocessable_entity
     end
-
 
     respond_to do |format|
       if @transaction.save && user.save && ownership_record.save

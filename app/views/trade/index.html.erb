@@ -1,37 +1,65 @@
+
 <p id="notice"><%= notice %></p>
 
 <!-- todo: display username here, when we know which user is logged in -->
 <h1>Make Trade</h1>
 
 <br>
+<% if current_user %>
+<%= form_for Transaction.new, url: "/transactions", method: :post do |form| %>
+  <div class="transaction_type" id="transaction_type" name="transaction_type">
+  <%= form.radio_button :transaction_type, 'buy', :checked => true %>
+  <%= label :buy_selection, 'buy'%>
+  <%= form.radio_button :transaction_type, 'sell' %>
+  <%= label :sell_selection, 'sell'%>
+  </div>
 
-<form>
-  <label for="stockname">Stock to trade:</label>
-  <select id="stockname" name="stockname">
-    <!-- todo: fill this up with stocks the user owns -->
-    <% if current_user %>
-    <% Stock.all.each do |stock| %>
-      <option value="#{stock.symbol}"><%=stock.symbol=%></option>
+  <div id="input_stock">
+  <%= form.label :stock_id, "Input Stock Symbol:" %>
+  <%= form.text_field :stock_id %>
+  </div>
+
+  <div id="owned_stock" style="display: none;">
+    <label for="selected_stock">Owned Stocks:</label>
+    <select id="selected_stock" name="selected_stock">
+    <% current_user.stocks_ownership.each do |ownership| %>
+      <option value=<%=ownership.stock.id%>><%=ownership.stock.symbol=%></option>
     <% end %>
-    <% end %>
-  </select>
+    </select>
+  </div>
   <br>
-
- <label for="tradetype">Trade type:</label>
-  <select id="tradetype" name="tradetype">
-    <option value="buy">Buy</option>
-    <option value="sell">Sell</option>
-  </select>
+  <label for="num_shares">Number of Shares: </label>
+  <%= form.number_field :num_shares, min: 1, max: 9 %>
   <br>
-
-<label for="amount">Amount to trade:</label>
-  <select id="amount" name="amount">
-    <!-- todo: fill this up with # of the stock the user owns -->
-    <option value="one">1</option>
-  </select>
   <br>
-  <!-- todo: not sure if this submit goes anywhere lol -->
-  <input type="submit" value="Submit">
-</form>
+  <div class="actions">
+  <%= form.submit "trade", class: 'btn btn-success'%>
+  </div>
+  <br>
+<% end %>
+<%end%>
 
+
+<div>
 <button onclick="window.location.href='/'">Back to Home</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+        $(document).ready(function() {
+            $("#transaction_type").click(function() {
+                rad_val = $("input[name='transaction[transaction_type]']:checked").val();
+                owned_stocks_val = $("#owned_stock");
+                input_stocks_val = $("#input_stock");
+                if (rad_val == 'buy') {
+                  owned_stocks_val.hide();
+                  input_stocks_val.show();
+                }
+                else if (rad_val == 'sell') {
+                  owned_stocks_val.show();
+                  input_stocks_val.hide();
+                }
+            });
+        });
+</script>
+
