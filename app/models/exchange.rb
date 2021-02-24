@@ -20,4 +20,20 @@
 class Exchange < ApplicationRecord
   belongs_to :user
   enum exchange_type: [:deposit, :withdrawal]
+  validate :user_can_make_exchange
+  after_create :perform_exchange
+
+  def user_can_make_exchange
+    case exchange_type
+    when "withdrawal"
+      if amount > user.cash_balance
+        errors.add "Cannot withdraw more money than is currently in your account."
+      end
+    end
+  end
+
+  def perform_exchange
+    exchange_multiplier = deposit? ? 1 : -1
+    user.increment(:cash_balance, amount * exchange_multiplier).save!
+  end
 end
