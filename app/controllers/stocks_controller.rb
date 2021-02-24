@@ -25,6 +25,7 @@ class StocksController < ApplicationController
     if stock_params[:symbol].nil? || stock_params[:symbol].empty?
       render json: { error: "Missing required stock symbol." }, status: :unprocessable_entity
     end
+    @stock.symbol = @stock.symbol.upcase
     if params[:commit] == "Submit"
       # Normal Submit
     elsif params[:commit] == "Generate from API"
