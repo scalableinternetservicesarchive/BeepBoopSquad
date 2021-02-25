@@ -30,6 +30,7 @@ class TradeController < ApplicationController
     input_params[:formats] = :html
     redirect_post(transactions_path, params: input_params)
   end
+
 =begin
 <!--
 <form>
