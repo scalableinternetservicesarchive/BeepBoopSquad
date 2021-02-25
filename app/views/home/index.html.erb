@@ -5,15 +5,15 @@
   <p>Current portfolio value: <%= current_user.portfolio_value %></p>
   <h3>List of all stocks owned by <%=current_user.name%></h3>
   <ul>
-    <% current_user.stocks_ownership.each do |stock| %>
-      <li><%= stock.name %> | <%= stock.symbol %> | <%= stock.share_price %></li>
+    <% current_user.stocks_ownership.each do |ownership| %>
+      <li><%= ownership.stock.name %> | <%= ownership.stock.symbol %> | <%= ownership.stock.share_price %> | Amt: <%= ownership.num_shares%></li>
     <% end %>
   </ul>
   <!-- todo: add graph for portfolio value -->
   <div class="actions">
     <button onclick="window.location.href='/deposit'">Make Deposit</button>
     <button onclick="window.location.href='/withdrawal'">Make Withdrawal</button>
-    <button onclick="window.location.href='/trade'">Make Trade</button>
+    <button onclick="window.location.href='/trade/new'">Make Trade</button>
   </div>
   <div id="logout_link">
   <%= link_to "Log Out", logout_path %>
