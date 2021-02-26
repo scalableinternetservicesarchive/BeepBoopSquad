@@ -64,6 +64,12 @@ class TransactionsController < ApplicationController
         return render json: {error: "Invalid transaction type."}, status: :unprocessable_entity
       end
     end
+    """
+    @transaction = Transaction.new(transaction_params)
+    unless @transaction.user.nil?
+      @transaction.user_id = session[:user_id]
+    end
+    """
     respond_to do |format|
       if @transaction.save && user.save && ownership_record.save
         format.html { redirect_to root_path, notice: "Transaction was successfully created." }

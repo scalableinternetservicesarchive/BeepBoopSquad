@@ -17,7 +17,7 @@
     <% @exchanges.each do |exchange| %>
       <tr>
         <td><%= exchange.user_id %></td>
-        <td><%= exchange.type %></td>
+        <td><%= exchange.exchange_type %></td>
         <td><%= exchange.amount %></td>
         <td><%= link_to 'Show', exchange %></td>
         <td><%= link_to 'Edit', edit_exchange_path(exchange) %></td>

@@ -20,8 +20,8 @@ module App
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.after_initialize do
-      RecordPortfolioValuesJob.perform_async
-      UpdateStalePricesJob.perform_async
+      RecordPortfolioValuesJob.perform_in(30)
+      UpdateStalePricesJob.perform_in(30)
     end
   end
 end
