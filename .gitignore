@@ -36,3 +36,9 @@ yarn-debug.log*
 .yarn-integrity
 
 web-variables.env
+
+.idea/
+app/log
+app/development.log
+
+tsung/tsung_logs
