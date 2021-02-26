@@ -10,6 +10,7 @@
 #  updated_at   :datetime         not null
 #
 class User < ApplicationRecord
+  validates :name, presence:true, uniqueness: {case_sensitive: false}
   has_many :ownerships
   has_many :stocks, through: :ownerships
   has_many :transactions
@@ -23,5 +24,9 @@ class User < ApplicationRecord
       total_value += ownership.num_shares * ownership.stock.share_price
     end
     total_value
+  end
+
+  def stocks_ownership
+    return self.ownerships.includes(:stock)
   end
 end

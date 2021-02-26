@@ -14,12 +14,15 @@ class TransactionsController < ApplicationController
   # POST /transactions or /transactions.json
   def create
     @transaction = Transaction.new(transaction_params)
+    unless @transaction.user.nil?
+      @transaction.user_id = session[:user_id]
+    end
     respond_to do |format|
-      if @transaction.save
-        format.html { redirect_to @transaction, notice: "Transaction was successfully created." }
+      if @transaction.save && user.save && ownership_record.save
+        format.html { redirect_to root_path, notice: "Transaction was successfully created." }
         format.json { render :show, status: :created, location: @transaction }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render new_trade_path, notice: "Transaction unsuccessful. Please try again" }
         format.json { render json: @transaction.errors, status: :unprocessable_entity }
       end
     end

@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+<% if current_user %>
+  Logged in as <%= current_user.name %>.
+  <p>Current cash balance: <%= current_user.cash_balance %></p>
+  <p>Current portfolio value: <%= current_user.portfolio_value %></p>
+  <h3>List of all stocks owned by <%=current_user.name%></h3>
+  <ul>
+    <% current_user.stocks_ownership.each do |ownership| %>
+      <li><%= ownership.stock.name %> | <%= ownership.stock.symbol %> | <%= ownership.stock.share_price %> | Amt: <%= ownership.num_shares%></li>
+    <% end %>
+  </ul>
+  <!-- todo: add graph for portfolio value -->
+  <div class="actions">
+    <%= link_to "Make Deposit or Withdrawal", new_exchange_path, class: "btn btn-primary" %>
+    <%= link_to "Make Trade", new_trade_path, class: "btn btn-primary" %>
+  </div>
+  <div id="logout_link">
+  <%= link_to "Log Out", logout_path %>
+  </div>
+<% else %>
+  <%= link_to "Sign Up", signup_path %> or 
+  <%= link_to "Log In", login_path %>
+<% end %>
