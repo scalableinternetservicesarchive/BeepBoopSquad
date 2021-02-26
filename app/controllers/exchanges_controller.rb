@@ -13,6 +13,7 @@ class ExchangesController < ApplicationController
   # GET /exchanges/new
   def new
     @exchange = Exchange.new
+    @exchange.user = current_user
   end
 
   # GET /exchanges/1/edit
@@ -22,10 +23,11 @@ class ExchangesController < ApplicationController
   # POST /exchanges or /exchanges.json
   def create
     @exchange = Exchange.new(exchange_params)
+    @exchange.user = current_user
 
     respond_to do |format|
       if @exchange.save
-        format.html { redirect_to @exchange, notice: "Exchange was successfully created." }
+        format.html { redirect_to '/', notice: "Exchange was successfully created." }
         format.json { render :show, status: :created, location: @exchange }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -64,6 +66,6 @@ class ExchangesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def exchange_params
-      params.require(:exchange).permit(:user_id, :type, :amount)
+      params.require(:exchange).permit( :exchange_type, :amount)
     end
 end

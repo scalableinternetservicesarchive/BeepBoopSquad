@@ -11,9 +11,8 @@
   </ul>
   <!-- todo: add graph for portfolio value -->
   <div class="actions">
-    <button onclick="window.location.href='/deposit'">Make Deposit</button>
-    <button onclick="window.location.href='/withdrawal'">Make Withdrawal</button>
-    <button onclick="window.location.href='/trade/new'">Make Trade</button>
+    <%= link_to "Make Deposit or Withdrawal", new_exchange_path, class: "btn btn-primary" %>
+    <%= link_to "Make Trade", new_trade_path, class: "btn btn-primary" %>
   </div>
   <div id="logout_link">
   <%= link_to "Log Out", logout_path %>

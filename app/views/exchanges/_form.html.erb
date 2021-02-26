@@ -12,13 +12,10 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :type %>
-    <%= form.text_field :type %>
+    <%= form.radio_button :exchange_type, 'deposit', :checked => true %>
+    <%= label :exchange_type_deposit, 'Deposit' %>
+    <%= form.radio_button :exchange_type, 'withdrawal' %>
+    <%= label :exchange_type_withdrawal, 'Withdrawal'%>
   </div>
 
   <div class="field">
