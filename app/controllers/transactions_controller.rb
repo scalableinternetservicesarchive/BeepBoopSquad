@@ -15,7 +15,7 @@ class TransactionsController < ApplicationController
   def create
     @transaction = Transaction.new(transaction_params)
     if @transaction.user.nil?
-      @transaction.user_id = session[:user_id]
+      @transaction.user = current_user
     end
     respond_to do |format|
       if @transaction.save
