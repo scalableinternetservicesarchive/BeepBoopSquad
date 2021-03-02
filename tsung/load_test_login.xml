@@ -23,13 +23,22 @@
   </options>
   <sessions>
     <session name="http-example" probability="100" type="ts_http">
-      <request>
-        <http url="/transactions"
-              method="POST"
-              content_type='application/json'
-              contents_from_file="./transaction_body.json"
-        />
-      </request>
+  <request>
+    <http url="/sessions" content_type = 'application/json' method="POST" 
+    contents_from_file="./login_info.json" >
+    </http>
+  </request>
+  <request>
+    <http url="/transactions" content_type = 'application/json' method="POST" 
+    contents_from_file="./transaction_buy.json">
+    </http>
+  </request>
+
+  <request>
+    <http url="/transactions" content_type = 'application/json' method="POST" 
+    contents_from_file="./transaction_sell.json">
+    </http>
+  </request>
     </session>
   </sessions>
 

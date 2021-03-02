@@ -11,37 +11,56 @@ class TransactionsController < ApplicationController
   def show
   end
 
+  def new
+    if !session[:user_id].nil?
+      @user = User.find(session[:user_id])
+      @owned_stocks = @user.stocks_ownership
+    end
+    @transaction = Transaction.new
+  end
+
   # POST /transactions or /transactions.json
   def create
+    stock_id = -1
     user = User.find(transaction_params[:user_id])
-    stock = Stock.find(transaction_params[:stock_id])
+    if !is_numeric(transaction_params[:stock_id])
+      stock_id = Stock.find_by symbol: transaction_params[:stock_id].upcase
+    else
+      stock_id = transaction_params[:stock_id]
+    end
+    stock = Stock.find_by id: (stock_id)
     if user.nil? || stock.nil?
       respond_to do |format|
-      format.html {redirect_to root_path, notice: "Specified user or stock did not exist", status: :unprocessable_entity }
+      format.html {redirect_to new_transaction_path, notice: "Specified user or stock did not exist", status: :unprocessable_entity }
       format.json { render json: {error: "Specified user or stock did not exist"}, status: :unprocessable_entity }
       end
     end
-    if params.has_key?(:formats)
-      params[:format] = :html
-      request.format = :html
+
+    if session[:user_id].nil? || transaction_params[:user_id].to_i != session[:user_id].to_i
+      respond_to do |format|
+      format.html { redirect_to new_transaction_path, error: "Not authorized to perform this transaction", status: :unauthorized }
+      format.json {render json: { error: "Not authorized to perform this transaction"}, status: :unauthorized }
+      end
     end
+
     num_shares = transaction_params[:num_shares].to_i
     transaction_amount = num_shares * stock.share_price
 
-    ownership_record = Ownership.find_or_initialize_by(stock: stock, user: user)
+    ownership_record = Ownership.find_or_initialize_by(stock: stock, user: user) #sometimes there are multiple stocks of same stock_id and user_id
+
     if ownership_record.num_shares.nil?
       ownership_record.num_shares = 0
     end
+
     @transaction = Transaction.new(cost_per_share: stock.share_price, num_shares: num_shares, stock: stock, user: user)
 
     case transaction_params[:transaction_type]
     when "buy"
       @transaction.transaction_type = :buy
       if user.cash_balance < transaction_amount
-        if request.format == :html
-          return redirect_to new_trade_path, notice: "Not enough money to complete the transaction"
-        elsif request.format == :json
-          return render json: {error: "Not enough money to complete the transaction"}, status: :forbidden
+        respond_to do |format|
+          format.html { redirect_to new_transaction_path, error: "Not enough money to complete the transaction", status: :forbidden }
+          format.json { render json: {error: "Not enough money to complete the transaction" }, status: :forbidden }
         end
       end
       ownership_record.num_shares += num_shares
@@ -49,33 +68,32 @@ class TransactionsController < ApplicationController
     when "sell"
       @transaction.transaction_type = :sell
       if ownership_record.num_shares < num_shares
-        if request.format == :html
-          return redirect_to new_trade_path, notice: "Not enough shares owned to sell."
-        elsif request.format == :json
-          return render json: {error: "Not enough shares owned to sell."}, status: :forbidden
+        respond_to do |format|
+        format.html { redirect_to new_transaction_path, error: "Not enough shares owned to sell.", status: :forbidden }
+        format.json { render json: {error: "Not enough shares owned to sell."}, status: :forbidden }
         end
       end
       ownership_record.num_shares -= num_shares
       user.cash_balance += transaction_amount
     else
-      if request.format == :html
-        return redirect_to new_trade_path, notice: "Invalid transaction type."
-      elsif request.format == :json
-        return render json: {error: "Invalid transaction type."}, status: :unprocessable_entity
+      respond_to do |format|
+      format.html { redirect_to new_transaction_path, error: "Invalid transaction type.", status: :unprocessable_entity }
+      format.json { render json: {error: "Invalid transaction type."}, status: :unprocessable_entity }
       end
     end
-    """
-    @transaction = Transaction.new(transaction_params)
-    unless @transaction.user.nil?
-      @transaction.user_id = session[:user_id]
-    end
-    """
+
     respond_to do |format|
+      user.errors.full_messages
+      @transaction.errors.full_messages
+      ownership_record.errors.full_messages
       if @transaction.save && user.save && ownership_record.save
-        format.html { redirect_to root_path, notice: "Transaction was successfully created." }
+        puts 'successful transaction!!!!'
+        format.html { redirect_to root_path, notice: "Transaction was successfully created." } #status: :created }
         format.json { render :show, status: :created, location: @transaction }
       else
-        format.html { render new_trade_path, notice: "Transaction unsuccessful. Please try again" }
+        puts 'bad transaction'
+        puts transaction_params
+        format.html { render new_transaction_path, notice: "Transaction unsuccessful. Please try again" }
         format.json { render json: @transaction.errors, status: :unprocessable_entity }
       end
     end
@@ -90,5 +108,10 @@ class TransactionsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def transaction_params
       params.require(:transaction).permit(:user_id, :stock_id, :num_shares, :transaction_type)
+    end
+    
+    def is_numeric(input)
+      return true if input =~ /\A\d+\Z/
+      true if Float(input) rescue false
     end
 end

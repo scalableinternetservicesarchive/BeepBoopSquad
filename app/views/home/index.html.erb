@@ -1,18 +1,30 @@
+<%= stylesheet_link_tag 'home' %>
 <p id="notice"><%= notice %></p>
 <% if current_user %>
   Logged in as <%= current_user.name %>.
   <p>Current cash balance: <%= current_user.cash_balance %></p>
   <p>Current portfolio value: <%= current_user.portfolio_value %></p>
-  <h3>List of all stocks owned by <%=current_user.name%></h3>
-  <ul>
-    <% current_user.stocks_ownership.each do |ownership| %>
-      <li><%= ownership.stock.name %> | <%= ownership.stock.symbol %> | <%= ownership.stock.share_price %> | Amt: <%= ownership.num_shares%></li>
+  <h3>List of stocks owned by <%=current_user.name%></h3>
+  <table>
+  <tr>
+    <th>Name</th>
+    <th>Symbol</th>
+    <th>Price</th>
+    <th>Shares</th>
+  </tr>
+    <% @owned_stocks.each do |ownership| %>
+      <tr>
+        <th><%= ownership.stock.name %></th>
+        <th><%= ownership.stock.symbol %></th>
+        <th><%= ownership.stock.share_price %></th>
+        <th><%= ownership.num_shares %></th>
+      </tr>
     <% end %>
-  </ul>
+  </table>
   <!-- todo: add graph for portfolio value -->
   <div class="actions">
     <%= link_to "Make Deposit or Withdrawal", new_exchange_path, class: "btn btn-primary" %>
-    <%= link_to "Make Trade", new_trade_path, class: "btn btn-primary" %>
+    <%= link_to "Make Trade", new_transaction_path, class: "btn btn-primary" %>
   </div>
   <div id="logout_link">
   <%= link_to "Log Out", logout_path %>

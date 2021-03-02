@@ -1,4 +1,9 @@
+<p id="notice"><%= notice %></p>
+<%= stylesheet_link_tag 'transactions'%>
+<div>
+<% if @user %>
 <%= form_with(model: transaction) do |form| %>
+  <%= form.hidden_field :user_id, value: @user.id %>
   <% if transaction.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
@@ -11,7 +16,46 @@
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="top">
+  <div class="input-radio">
+    <%= form.radio_button :transaction_type, 'buy', :checked => true, class: "form-check-input" %>
+    <%= label :buy_selection, 'buy', class: "form-check-label"%>
+    <%= form.radio_button :transaction_type, 'sell', class: "form-check-input" %>
+    <%= label :sell_selection, 'sell', class: "form-check-label" %>
+  </div>
+
+  <div class="input-field">
+    <%= form.label :stock_id, "Input Stock Symbol" %>
+    <%= form.text_field :stock_id %>
+    <%= form.label :num_shares, "Number of Shares" %>
+    <%= form.number_field :num_shares, min: 1 %>
+    <%= form.submit "trade", class: 'input-submit'%>
+  </div>
+  </div>
+  <br>
+  <div class="bottom">
+  <h2>List of Owned Stocks</h2>
+  <table>
+  <tr>
+    <th>Name</th>
+    <th>Symbol</th>
+    <th>Price</th>
+    <th>Shares</th>
+  </tr>
+    <% @owned_stocks.each do |ownership| %>
+      <tr>
+        <th><%= ownership.stock.name %></th>
+        <th><%= ownership.stock.symbol %></th>
+        <th><%= ownership.stock.share_price %></th>
+        <th><%= ownership.num_shares %></th>
+      </tr>
+    <% end %>
+  </table>
   </div>
 <% end %>
+<%end%>
+</div>
+<div style="clear: both"></div>
+<br>
+
+

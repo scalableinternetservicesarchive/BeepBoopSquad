@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'home#index'
-  resources :transactions, only: [:create, :show, :index], defaults: {format: :json}
+  resources :transactions #only: [:create, :show, :index], defaults: {format: :json}
   resources :portfolio_value_histories
   resources :exchanges
   resources :ownerships
@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   resources :users
   resources :deposit
   resources :withdrawal
-  resources :trade
   resources :sessions, only: [:new, :create, :destroy]
 
   get 'signup', to: 'users#new', as: 'signup'
