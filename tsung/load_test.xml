@@ -10,11 +10,7 @@
     <server host="localhost" port="3000" type="tcp"></server>
   </servers>
   <load>
-<<<<<<< Updated upstream
     <arrivalphase phase="1" duration="5" unit="second">
-=======
-    <arrivalphase phase="1" duration="10" unit="second">
->>>>>>> Stashed changes
       <users arrivalrate="1" unit="second"></users>
     </arrivalphase>
     <arrivalphase phase="2" duration="5" unit="second">
@@ -30,7 +26,6 @@
   </options>
   <sessions>
     <session name="http-example" probability="100" type="ts_http">
-<<<<<<< Updated upstream
 <!--      <thinktime value="2" random="true"></thinktime>-->
       <request>
 <!--          <http url="/users"-->
@@ -46,27 +41,6 @@
 <!--        <http url='/transactions' version='1.1' method='POST'-->
 <!--              contents="user_id=1&amp;stock_id=1&amp;num_shares=3&amp;transaction_type=sell"></http>-->
       </request>
-=======
-
-  <request>
-    <http url="/sessions" content_type = 'application/json' method="POST" 
-    contents_from_file="./login_info.json" >
-    </http>
-  </request>
-
-  <request>
-    <http url="/transactions" content_type = 'application/json' method="POST" 
-    contents_from_file="./transaction_buy.json">
-    </http>
-  </request>
-
-  <request>
-    <http url="/transactions" content_type = 'application/json' method="POST" 
-    contents_from_file="./transaction_sell.json">
-    </http>
-  </request>
-  
->>>>>>> Stashed changes
     </session>
   </sessions>
 

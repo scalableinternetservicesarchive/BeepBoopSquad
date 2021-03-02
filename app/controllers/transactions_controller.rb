@@ -46,7 +46,7 @@ class TransactionsController < ApplicationController
     num_shares = transaction_params[:num_shares].to_i
     transaction_amount = num_shares * stock.share_price
 
-    ownership_record = Ownership.find_or_initialize_by(stock: stock, user: user) #sometimes there are multiple stocks of same stock_id and user_id
+    ownership_record = Ownership.find_or_initialize_by(stock: stock, user: user) #sometimes there are multiple ownerships of same stock_id and user_id
 
     if ownership_record.num_shares.nil?
       ownership_record.num_shares = 0
