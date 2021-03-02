@@ -14,7 +14,7 @@ class TransactionsController < ApplicationController
   # POST /transactions or /transactions.json
   def create
     @transaction = Transaction.new(transaction_params)
-    unless @transaction.user.nil?
+    if @transaction.user.nil?
       @transaction.user_id = session[:user_id]
     end
     respond_to do |format|
