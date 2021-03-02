@@ -18,7 +18,7 @@ class TransactionsController < ApplicationController
       @transaction.user_id = session[:user_id]
     end
     respond_to do |format|
-      if @transaction.save && user.save && ownership_record.save
+      if @transaction.save
         format.html { redirect_to root_path, notice: "Transaction was successfully created." }
         format.json { render :show, status: :created, location: @transaction }
       else
