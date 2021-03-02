@@ -6,8 +6,6 @@ Rails.application.routes.draw do
   resources :ownerships
   resources :stocks
   resources :users
-  resources :deposit
-  resources :withdrawal
   resources :trade
   resources :sessions, only: [:new, :create, :destroy]
 
