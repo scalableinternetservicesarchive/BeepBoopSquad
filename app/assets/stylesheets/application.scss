@@ -132,3 +132,33 @@ input:not([type=radio], [type=submit]) {
   font-size: 12px;
   list-style: square; }
 
+  #table-no-padding {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.table-no-padding {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.table-scrollable-content {
+    height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.transaction-modal {
+    font-family: 'Open Sans', sans-serif;
+    background-color: rgba(17, 19, 23, 0.9);
+    display: inline-block;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 50px;
+  }
