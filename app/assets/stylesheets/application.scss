@@ -13,3 +13,122 @@
  */
 
 @import "bootstrap";
+
+body {
+  /*background-color: #13151a;*/
+  background-image: url(background.jpg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+
+  font-family: 'Open Sans', sans-serif;
+  margin: 33px;
+}
+
+.body {
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+
+  font-family: 'Open Sans', sans-serif;
+  margin: 33px;
+}
+
+.line_chart {
+  background-color: black;
+  color: red;
+}
+
+#notice {
+	font-style: italic;
+}
+
+.login-modal {
+  font-family: 'Open Sans', sans-serif;
+  background-color: rgba(17, 19, 23, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 50px;
+}
+
+input[type=text]:focus, input[type=password]:focus{
+  background-color: #5cb85c;
+  border: none;
+  outline: none;
+}
+
+input {
+    -webkit-transition: 0.5s;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 15px;
+    padding-left: 15px;
+	min-width: 280px;
+	/*background-color: #111317;*/
+  background-color: #0b0d0f;
+	color: white;
+	border: none;
+}
+
+.top-user-menu {
+	text-align: left;
+	min-width: 500px;
+}
+
+.acts {
+	display: flex;
+	width: 100%;
+	flex-direction: row;
+}
+
+.btn-warning, .btn-secondary, .btn-success {
+	min-width: 180px;
+}
+
+.field, .actions {
+  margin: 10px !important;
+  font-family: 'Open Sans', sans-serif !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#alert {
+	color: red;
+	font-style: italic;
+}
+
+.login-image {
+	max-width: 400px;
+}
+
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px 7px 0;
+  margin-bottom: 20px;
+  color: white;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px -7px 0;
+  background-color: #c00;
+  color: #fff; }
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square; }
+
