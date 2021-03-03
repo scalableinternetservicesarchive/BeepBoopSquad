@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'home#index'
-  resources :transactions, only: [:create, :show, :index], defaults: {format: :json}
+  resources :transactions
   resources :portfolio_value_histories
   resources :exchanges
   resources :ownerships
