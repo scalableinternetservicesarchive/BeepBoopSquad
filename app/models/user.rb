@@ -10,7 +10,7 @@
 #  updated_at   :datetime         not null
 #
 class User < ApplicationRecord
-  validates :name, presence:true, uniqueness: {case_sensitive: false}
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
   has_many :ownerships
   has_many :stocks, through: :ownerships
   has_many :transactions
@@ -27,6 +27,6 @@ class User < ApplicationRecord
   end
 
   def stocks_ownership
-    return self.ownerships.includes(:stock)
+    self.ownerships.includes(:stock)
   end
 end

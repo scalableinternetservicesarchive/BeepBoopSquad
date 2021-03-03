@@ -11,8 +11,9 @@
 #
 # Indexes
 #
-#  index_ownerships_on_stock_id  (stock_id)
-#  index_ownerships_on_user_id   (user_id)
+#  index_ownerships_on_stock_id              (stock_id)
+#  index_ownerships_on_user_id               (user_id)
+#  index_ownerships_on_user_id_and_stock_id  (user_id,stock_id) UNIQUE
 #
 # Foreign Keys
 #

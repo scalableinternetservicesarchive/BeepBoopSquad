@@ -33,7 +33,7 @@ class Exchange < ApplicationRecord
   end
 
   def perform_exchange
-    exchange_multiplier = deposit? ? 1 : -1
+    exchange_multiplier = self.deposit? ? 1 : -1
     user.increment(:cash_balance, amount * exchange_multiplier).save!
   end
 end

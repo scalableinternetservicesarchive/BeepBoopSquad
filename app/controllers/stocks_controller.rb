@@ -1,4 +1,5 @@
 class StocksController < ApplicationController
+  skip_forgery_protection
   before_action :set_stock, only: %i[ show edit update destroy ]
 
   # GET /stocks or /stocks.json

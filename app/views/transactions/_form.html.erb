@@ -1,17 +1,36 @@
-<%= form_with(model: transaction) do |form| %>
-  <% if transaction.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+<% if current_user %>
+  <%= form_with(model: transaction) do |form| %>
+    <% if transaction.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
 
-      <ul>
-        <% transaction.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% transaction.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="transaction_type" id="transaction_type" name="transaction_type">
+      <%= form.radio_button :transaction_type, 'buy', :checked => true %>
+      <%= label :buy_selection, 'buy' %>
+      <%= form.radio_button :transaction_type, 'sell' %>
+      <%= label :sell_selection, 'sell' %>
+    </div>
+
+    <div id="stock_symbol">
+      <%= form.label :stock_symbol, "Input Stock Symbol:" %>
+      <%= form.text_field :stock_symbol %>
+    </div>
+
+    <br>
+    <label for="num_shares">Number of Shares: </label>
+    <%= form.number_field :num_shares, min: 1 %>
+    <br>
+    <br>
+    <div class="actions">
+      <%= form.submit "Trade", class: "btn btn-success" %>
     </div>
   <% end %>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
 <% end %>

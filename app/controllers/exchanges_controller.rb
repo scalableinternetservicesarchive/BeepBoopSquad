@@ -1,4 +1,5 @@
 class ExchangesController < ApplicationController
+  skip_forgery_protection
   before_action :set_exchange, only: %i[ show edit update destroy ]
 
   # GET /exchanges or /exchanges.json
@@ -23,7 +24,9 @@ class ExchangesController < ApplicationController
   # POST /exchanges or /exchanges.json
   def create
     @exchange = Exchange.new(exchange_params)
-    @exchange.user = current_user
+    if @exchange.user.nil?
+      @exchange.user = current_user
+    end
 
     respond_to do |format|
       if @exchange.save
@@ -66,6 +69,6 @@ class ExchangesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def exchange_params
-      params.require(:exchange).permit( :exchange_type, :amount)
+      params.require(:exchange).permit( :user_id, :exchange_type, :amount)
     end
 end
