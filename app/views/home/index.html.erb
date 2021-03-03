@@ -1,13 +1,27 @@
 <p id="notice"><%= notice %></p>
 <% if current_user %>
-  Logged in as <%= current_user.name %>.
-  <p>Current cash balance: <%= current_user.cash_balance %></p>
-  <p>Current portfolio value: <%= current_user.portfolio_value %></p>
+  <div class="login-modal">
+  <p>Welcome, <%= current_user.name %>!</p>
+  <div class="top-user-menu">
+    <tr class="acts">
+      <td><%= link_to "Make Deposit or Withdrawal", new_exchange_path, class: "btn btn-success" %></td>
+      <td><%= link_to "Make Trade", new_transaction_path, class: "btn btn-success" %></td>
+      <td><%= link_to "Log Out", logout_path, class: "btn btn-secondary" %></td>
+    </tr>
+    <div>
+      <br>
+      Current cash balance: <%= current_user.cash_balance %>
+      <br>
+      Current portfolio value: <%= current_user.portfolio_value %>
+      <br>
+    </div>
+  </div>
+  <br>
   <h3>Portfolio History</h3>
   <%= line_chart [{name: "Portfolio History", data: @portfolio_history.inject({}) {|res, v| res[v[:created_at]] = v.portfolio_value; res}}],
-                 curve: false, points: false, legend: false, width: "700px", height: "500px"
+                 curve: false, points: false, legend: false, width: "590px", height: "350px"
   %>
-
+  <br>
   <h3>List of all stocks owned by <%= current_user.name %></h3>
   <ul>
     <% current_user.stocks_ownership.each do |ownership| %>
@@ -15,20 +29,19 @@
         Amt: <%= ownership.num_shares %></li>
     <% end %>
   </ul>
-  <!-- todo: add graph for portfolio value -->
-  <div class="actions">
-    <%= link_to "Make Deposit or Withdrawal", new_exchange_path, class: "btn btn-primary" %>
-    <%= link_to "Make Trade", new_transaction_path, class: "btn btn-primary" %>
-  </div>
-  <div id="logout_link">
-    <%= link_to "Log Out", logout_path %>
-  </div>
-  <blockquote class="twitter-tweet">
+  <br>
+  <blockquote class="twitter-tweet" data-theme="dark">
     <p lang="en" dir="ltr">It’s inevitable <a href="https://t.co/eBKnQm6QyF">pic.twitter.com/eBKnQm6QyF</a></p>&mdash;
     Elon Musk (@elonmusk)
     <a href="https://twitter.com/elonmusk/status/1284291528328790016?ref_src=twsrc%5Etfw">July 18, 2020</a></blockquote>
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
 <% else %>
-  <%= link_to "Sign Up", signup_path %> or
-  <%= link_to "Log In", login_path %>
+    <div class="login-modal">
+    <h1>Welcome to Stonk Market!</h1>
+    <%= image_tag "doge-logo.png", class: "login-image" %>
+    <br>
+    <%= link_to "Sign Up", signup_path, class: "btn btn-success" %> or
+    <%= link_to "Log In", login_path, class: "btn btn-success" %>
+    </div>
 <% end %>
