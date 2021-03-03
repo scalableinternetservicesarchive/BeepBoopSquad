@@ -56,14 +56,12 @@ class Transaction < ApplicationRecord
     ownership_record = ownership
     case transaction_type
     when "buy"
-      user.cash_balance -= user_balance_change
-      ownership_record = ownership_record || Ownership.new(user: user, stock: stock, num_shares: 0)
-      ownership_record.num_shares += num_shares
+      user.increment! :cash_balance, -user_balance_change
+      ownership_record = ownership_record || Ownership.create(user: user, stock: stock, num_shares: 0)
+      ownership_record.increment! :num_shares, num_shares
     when "sell"
-      user.cash_balance += user_balance_change
-      ownership_record.num_shares -= num_shares
+      user.increment! :cash_balance, user_balance_change
+      ownership_record.increment! :num_shares, -num_shares
     end
-    user.save
-    ownership_record.save
   end
 end
