@@ -34,6 +34,7 @@ class TransactionsController < ApplicationController
       format.html {redirect_to new_transaction_path, notice: "Specified user or stock did not exist", status: :unprocessable_entity }
       format.json { render json: {error: "Specified user or stock did not exist"}, status: :unprocessable_entity }
       end
+      return
     end
 
     if session[:user_id].nil? || transaction_params[:user_id].to_i != session[:user_id].to_i
