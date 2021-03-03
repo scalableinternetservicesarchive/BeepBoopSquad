@@ -3,10 +3,16 @@
   Logged in as <%= current_user.name %>.
   <p>Current cash balance: <%= current_user.cash_balance %></p>
   <p>Current portfolio value: <%= current_user.portfolio_value %></p>
-  <h3>List of all stocks owned by <%=current_user.name%></h3>
+  <h3>Portfolio History</h3>
+  <%= line_chart [{name: "Portfolio History", data: @portfolio_history.inject({}) {|res, v| res[v[:created_at]] = v.portfolio_value; res}}],
+                 curve: false, points: false, legend: false, width: "700px", height: "500px"
+  %>
+
+  <h3>List of all stocks owned by <%= current_user.name %></h3>
   <ul>
     <% current_user.stocks_ownership.each do |ownership| %>
-      <li><%= ownership.stock.name %> | <%= ownership.stock.symbol %> | <%= ownership.stock.share_price %> | Amt: <%= ownership.num_shares%></li>
+      <li><%= ownership.stock.name %> | <%= ownership.stock.symbol %> | <%= ownership.stock.share_price %> |
+        Amt: <%= ownership.num_shares %></li>
     <% end %>
   </ul>
   <!-- todo: add graph for portfolio value -->
@@ -15,10 +21,14 @@
     <%= link_to "Make Trade", new_transaction_path, class: "btn btn-primary" %>
   </div>
   <div id="logout_link">
-  <%= link_to "Log Out", logout_path %>
+    <%= link_to "Log Out", logout_path %>
   </div>
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">It’s inevitable <a href="https://t.co/eBKnQm6QyF">pic.twitter.com/eBKnQm6QyF</a></p>&mdash; Elon Musk (@elonmusk) <a href="https://twitter.com/elonmusk/status/1284291528328790016?ref_src=twsrc%5Etfw">July 18, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <blockquote class="twitter-tweet">
+    <p lang="en" dir="ltr">It’s inevitable <a href="https://t.co/eBKnQm6QyF">pic.twitter.com/eBKnQm6QyF</a></p>&mdash;
+    Elon Musk (@elonmusk)
+    <a href="https://twitter.com/elonmusk/status/1284291528328790016?ref_src=twsrc%5Etfw">July 18, 2020</a></blockquote>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <% else %>
-  <%= link_to "Sign Up", signup_path %> or 
+  <%= link_to "Sign Up", signup_path %> or
   <%= link_to "Log In", login_path %>
 <% end %>
