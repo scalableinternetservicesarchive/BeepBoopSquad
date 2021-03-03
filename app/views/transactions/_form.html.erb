@@ -29,26 +29,38 @@
     <%= form.text_field :stock_symbol %>
     <%= form.label :num_shares, "Number of Shares" %>
     <%= form.number_field :num_shares, min: 1 %>
-    <%= form.submit "trade", class: 'input-submit'%>
+    <%= form.submit "Make Trade", class: 'input-submit'%>
   </div>
   </div>
   <br>
   <div class="bottom">
   <h2>List of Owned Stocks</h2>
-  <table>
+  <br>
+  <table class="table table-light">
+  <thead class="table-dark">
   <tr>
-    <th>Name</th>
-    <th>Symbol</th>
-    <th>Price</th>
-    <th>Shares</th>
+    <th scope="col">Name</th>
+    <th scope="col">Symbol</th>
+    <th scope="col">Price</th>
+    <th scope="col">Shares</th>
   </tr>
-    <% @owned_stocks.each do |ownership| %>
-      <tr>
+  </thead>
+    <% @owned_stocks.each_with_index do |ownership, index| %>
+      <% if index % 2 == 0%>
+      <tr class="table-light">
         <th><%= ownership.stock.name %></th>
         <th><%= ownership.stock.symbol %></th>
         <th><%= ownership.stock.share_price %></th>
         <th><%= ownership.num_shares %></th>
       </tr>
+      <% else %>
+      <tr class="table-secondary">
+        <th><%= ownership.stock.name %></th>
+        <th><%= ownership.stock.symbol %></th>
+        <th><%= ownership.stock.share_price %></th>
+        <th><%= ownership.num_shares %></th>
+      </tr>
+      <%end%>
     <% end %>
   </table>
   </div>

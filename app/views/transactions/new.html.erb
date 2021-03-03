@@ -1,7 +1,4 @@
-<h1 class ="title">New Transaction</h1>
-<p id="notice"><%= notice %></p>
-<%= render 'form', transaction: @transaction, owned_stocks: @owned_stocks %>
-
-<div class="back-button">
-    <%= button_to 'Back to Home Page', root_path, :method => "get", class: "btn btn-secondary btn-lg" %>
-</div>
+<%= stylesheet_link_tag 'transactions'%>
+<%= render 'shared/background', header: (render 'header'), 
+body: (render 'form', transaction: @transaction, owned_stocks: @owned_stocks),
+footer: (render 'footer') %>
