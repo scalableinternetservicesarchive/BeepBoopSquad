@@ -19,7 +19,7 @@
   <br>
   <h3>Portfolio History</h3>
   <%= line_chart [{name: "Portfolio History", data: @portfolio_history.inject({}) {|res, v| res[v[:created_at]] = v.portfolio_value; res}}],
-                 curve: false, points: false, legend: false, width: "590px", height: "350px"
+                 curve: false, points: false, legend: false, width: "590px", height: "350px", colors: ["#5cb85c"], library: {backgroundColor: "#111317"}
   %>
   <br>
   <h3>List of all stocks owned by <%= current_user.name %></h3>
