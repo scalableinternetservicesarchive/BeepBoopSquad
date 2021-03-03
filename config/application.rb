@@ -18,7 +18,6 @@ module App
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    config.web_console.whitelisted_ips = '172.19.0.1' #for load testing
     config.after_initialize do
       RecordPortfolioValuesJob.perform_in(30)
       UpdateStalePricesJob.perform_in(30)
