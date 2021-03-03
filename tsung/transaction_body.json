@@ -2,5 +2,5 @@
   "user_id": 1,
   "stock_id": 1,
   "num_shares": 4,
-  "transaction_type": "sell"
+  "transaction_type": "buy"
 }

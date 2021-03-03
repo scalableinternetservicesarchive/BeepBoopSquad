@@ -1,5 +1,5 @@
 {
   "user_id": 1,
-  "amount": 500.00,
-  "transaction_type": "deposit"
+  "amount": 10000.00,
+  "exchange_type": "deposit"
 }
