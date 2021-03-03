@@ -1,6 +1,6 @@
 {
-    "user_id": 1,
-    "stock_id": 1,
+    "user_id": 5,
+    "stock_id": 5,
     "num_shares": 1,
     "transaction_type": "sell"
 }

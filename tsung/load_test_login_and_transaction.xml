@@ -34,11 +34,6 @@
     </http>
   </request>
 
-  <request>
-    <http url="/transactions" content_type = 'application/json' method="POST" 
-    contents_from_file="./transaction_sell.json">
-    </http>
-  </request>
     </session>
   </sessions>
 
