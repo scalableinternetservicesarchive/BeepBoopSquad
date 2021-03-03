@@ -35,5 +35,6 @@ class Exchange < ApplicationRecord
   def perform_exchange
     exchange_multiplier = self.deposit? ? 1 : -1
     user.increment(:cash_balance, amount * exchange_multiplier).save!
+    PortfolioValueHistory.create(user: user, portfolio_value: user.portfolio_value)
   end
 end
