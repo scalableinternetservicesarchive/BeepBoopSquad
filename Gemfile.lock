@@ -84,6 +84,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    chartkick (3.4.2)
     childprocess (3.0.0)
     concurrent-ruby (1.1.8)
     crass (1.0.6)
@@ -167,7 +168,6 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (2.0.3)
-    repost (0.3.6)
     rubyzip (2.3.0)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -230,6 +230,7 @@ DEPENDENCIES
   bootstrap (~> 5.0.0.beta1)
   byebug
   capybara (>= 3.26)
+  chartkick
   dotenv-rails
   jbuilder (~> 2.7)
   jquery-rails
@@ -238,7 +239,6 @@ DEPENDENCIES
   puma (< 5.0)
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.2, >= 6.1.2.1)
-  repost
   sass-rails (>= 6)
   selenium-webdriver
   spring

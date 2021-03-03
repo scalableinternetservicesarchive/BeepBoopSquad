@@ -12,6 +12,8 @@ import "channels"
 //= require jquery_ujs
 //= require popper
 //= require bootstrap-sprockets
+//= require chartkick
+//= require Chart.bundle
 
 Rails.start()
 Turbolinks.start()
