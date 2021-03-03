@@ -1,4 +1,4 @@
 <%= stylesheet_link_tag 'transactions'%>
-<%= render 'shared/background', header: (render 'header'), 
+<%= render 'shared/background', header: nil, 
 body: (render 'form', transaction: @transaction, owned_stocks: @owned_stocks),
 footer: (render 'footer') %>

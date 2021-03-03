@@ -59,13 +59,13 @@ body {
   padding: 50px;
 }
 
-input[type=text]:focus, input[type=password]:focus{
+input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
   background-color: #5cb85c;
   border: none;
   outline: none;
 }
 
-input {
+input:not([type=radio], [type=submit]) {
     -webkit-transition: 0.5s;
     padding-top: 5px;
     padding-bottom: 5px;

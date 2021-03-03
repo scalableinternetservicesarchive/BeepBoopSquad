@@ -17,27 +17,40 @@
   <% end %>
 
   <div class="top">
-  <div class="input-radio">
+  <div class="transaction-modal">
+  <h1>New Transaction</h1>
+  <div class="radio-input">
+  <div class="form-check form-check-inline">
     <%= form.radio_button :transaction_type, 'buy', :checked => true, class: "form-check-input" %>
     <%= label :buy_selection, 'buy', class: "form-check-label"%>
+  </div>
+  <div class="form-check form-check-inline">
     <%= form.radio_button :transaction_type, 'sell', class: "form-check-input" %>
     <%= label :sell_selection, 'sell', class: "form-check-label" %>
   </div>
+  </div>
 
-  <div class="input-field">
+  <div class="field">
     <%= form.label :stock_symbol, "Input Stock Symbol" %>
     <%= form.text_field :stock_symbol %>
+  </div>
+  <div class="field">
     <%= form.label :num_shares, "Number of Shares" %>
     <%= form.number_field :num_shares, min: 1 %>
-    <%= form.submit "Make Trade", class: 'input-submit'%>
+  </div>
+  <div class="field">
+    <%= form.submit "Make Trade", class: 'btn btn-success btn-block'%>
+  </div>
+  
   </div>
   </div>
   <br>
   <div class="bottom">
   <h2>List of Owned Stocks</h2>
   <br>
-  <table class="table table-light">
-  <thead class="table-dark">
+  <div>
+  <table id="table-no-padding" class="table table-light">
+    <thead class="table-dark">
   <tr>
     <th scope="col">Name</th>
     <th scope="col">Symbol</th>
@@ -45,24 +58,32 @@
     <th scope="col">Shares</th>
   </tr>
   </thead>
+  </table>
+  
+  <div class="table-scrollable-content">
+  <table class="table table-light">
+  <tbody>
     <% @owned_stocks.each_with_index do |ownership, index| %>
       <% if index % 2 == 0%>
       <tr class="table-light">
-        <th><%= ownership.stock.name %></th>
-        <th><%= ownership.stock.symbol %></th>
-        <th><%= ownership.stock.share_price %></th>
-        <th><%= ownership.num_shares %></th>
+        <td><%= ownership.stock.name %></td>
+        <td><%= ownership.stock.symbol %></td>
+        <td><%= ownership.stock.share_price %></td>
+        <td><%= ownership.num_shares %></td>
       </tr>
       <% else %>
       <tr class="table-secondary">
-        <th><%= ownership.stock.name %></th>
-        <th><%= ownership.stock.symbol %></th>
-        <th><%= ownership.stock.share_price %></th>
-        <th><%= ownership.num_shares %></th>
+        <td><%= ownership.stock.name %></td>
+        <td><%= ownership.stock.symbol %></td>
+        <td><%= ownership.stock.share_price %></td>
+        <td><%= ownership.num_shares %></td>
       </tr>
       <%end%>
     <% end %>
+  </tbody>
   </table>
+  </div>
+  </div>
   </div>
 <% end %>
 <%end%>

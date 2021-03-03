@@ -2,40 +2,45 @@
 // They will automatically be included in application.scss.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
-.title {
+  .title {
     text-align: center;
   }
   
   h2 {
     text-align: center;
   }
+
+  tbody {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  tbody td {
+    width: 19%;  /* 19% is less than (100% / 5 cols) = 20% */
+  }
   
   .top {
     float: center;
-    margin-left:2%;
-    font-size: 100%;
+    text-align: center;
   }
   
   .bottom {
     float: center;
-    margin-left: 2%;
-    margin-right:2%;
   }
   
   .input-field {
-    margin: 20px auto;
+    margin: auto;
     width: 50%;
     text-align: center;
     float: center;
   }
   
-  .input-radio {
-    margin: 20px auto;
+  .radio-input {
     text-align: center;
   }
   
   .input-submit {
-    margin: 20px auto;
+    margin: auto;
     float: center;
     display: block;
     width: 100%;
@@ -54,5 +59,36 @@
     margin: auto;
     width: 100%;
     text-align: center;
+  }
+
+#table-no-padding {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.table-no-padding {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.table-scrollable-content {
+    height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.transaction-modal {
+    font-family: 'Open Sans', sans-serif;
+    background-color: rgba(17, 19, 23, 0.9);
+    display: inline-block;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 50px;
   }
   
