@@ -162,3 +162,24 @@ input:not([type=radio], [type=submit]) {
     color: white;
     padding: 50px;
   }
+
+  .div-align, .span {
+    display: inline-block;
+  }
+
+  .div-center {
+    text-align: center;
+  }
+
+  .div-align-left {
+   float: left;
+   text-align: center;
+  }
+
+  .div-align-left {
+    float: left;
+   }
+
+  .clearfix {
+    clear:both
+  }

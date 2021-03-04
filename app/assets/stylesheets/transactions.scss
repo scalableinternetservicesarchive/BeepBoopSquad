@@ -13,10 +13,11 @@
   tbody {
     overflow-y: auto;
     overflow-x: hidden;
+    //https://stackoverflow.com/questions/17067294/html-table-with-100-width-with-vertical-scroll-inside-tbody
   }
 
   tbody td {
-    width: 19%;  /* 19% is less than (100% / 5 cols) = 20% */
+    width: 33%;
   }
   
   .top {

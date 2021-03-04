@@ -1,0 +1,115 @@
+
+
+    <div id="bg-modal-shade" class="bg-modal-shade">
+    <div class="modal-wrapper">
+    <div class="modal-content">
+        <button id="close-modal-button" onclick="closeModalFunction()" class="close-modal-button">+</button>
+        <%= image_tag "money.png", alt: "picture of stonks", class: "image-icon" %>
+        <h2>New Stock</h2>
+        <%= form_with(model: new_stock, url: stocks_path, method: :post) do |form| %>
+          <div class="field">
+            <%= form.label :name, "Name", class: "label" %>
+            <%= form.text_field :name %>
+          </div>
+          <div class="field">
+            <%= form.label :symbol, "Symbol", class: "label" %>
+            <%= form.text_field :symbol %>
+          </div>
+          <div class="field">
+            <%= form.label :share_price, "Share Price", class: "label" %>
+            <%= form.number_field :share_price, step: :any%>
+          </div>
+          <div class="submit-action">
+            <%= submit_tag "Submit", class: "btn btn-success" %>
+            <%= submit_tag "Submit with Price API", class: "btn btn-success" %>
+          </div>
+        <% end %>
+    </div>
+    </div>
+  </div>
+
+  <div class="div-center">
+  <div>
+  <h1>Listed Stocks</h1>
+  </div>
+  <div>
+    <input type="text" id="myInput" onkeyup="searchFunction()" placeholder="Search for stock name or symbol">
+  </div>
+  <div class ="new-stock-button">
+    <h3>Stock not listed?</h3>
+    <button id="openmodal" class="btn btn-primary" onclick="openModalFunction()">Click to create Stock</button>
+  </div>
+  <br>
+  <div>
+  <table id="table-no-padding" class="table table-light">
+    <thead class="table-dark">
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Symbol</th>
+    <th scope="col">Price</th>
+  </tr>
+  </thead>
+  </table>
+  
+  <div class="table-scrollable-content">
+  <table id = "myTable" class="table table-light">
+  <tbody>
+    <% stocks.each_with_index do |stock, index| %>
+      <% if index % 2 == 0%>
+      <tr class="table-light">
+        <td><%= stock.name %></td>
+        <td><%= stock.symbol %></td>
+        <td><%= stock.share_price %></td>
+      </tr>
+      <% else %>
+      <tr class="table-secondary">
+        <td><%= stock.name %></td>
+        <td><%= stock.symbol %></td>
+        <td><%= stock.share_price %></td>
+      </tr>
+      <%end%>
+    <% end %>
+  </tbody>
+  </table>
+  </div>
+  </div>
+  </div>
+</div>
+
+<script>
+function searchFunction() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue, name, symbol;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    name = tr[i].getElementsByTagName("td")[0];
+    symbol = tr[i].getElementsByTagName("td")[1];
+    if (name) {
+      nameValue = name.textContent || name.innerText;
+      symbolValue = symbol.textContent || symbol.innerText;
+      if (nameValue.toUpperCase().indexOf(filter) > -1 || symbolValue.toUpperCase().indexOf(filter) > - 1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+function openModalFunction() {
+  var bgmodal;
+  bgmodal = document.getElementById("bg-modal-shade").style.display = "flex";
+}
+
+function closeModalFunction() {
+  var bgmodal;
+  bgmodal = document.getElementById("bg-modal-shade").style.display = "none";
+}
+</script>
+
+<!-- https://www.w3schools.com/howto/howto_js_filter_table.asp-->

@@ -5,6 +5,7 @@ class StocksController < ApplicationController
   # GET /stocks or /stocks.json
   def index
     @stocks = Stock.all
+    @new_stock = Stock.new
   end
 
   # GET /stocks/1 or /stocks/1.json
@@ -29,8 +30,10 @@ class StocksController < ApplicationController
     @stock.symbol = @stock.symbol.upcase
     if params[:commit] == "Submit"
       # Normal Submit
-    elsif params[:commit] == "Generate from API"
+    elsif params[:commit] == "Submit with Price API"
       @stock.fetch_stock_price
+      puts 'stock fetch price: '
+      puts @stock.share_price
     end
     respond_to do |format|
       if @stock.save
