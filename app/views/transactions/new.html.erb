@@ -1,5 +1,4 @@
-<h1>New Transaction</h1>
-
-<%= render 'form', transaction: @transaction %>
-
-<%= link_to 'Back', transactions_path %>
+<%= stylesheet_link_tag 'transactions'%>
+<%= render 'shared/background', header: nil, 
+body: (render 'form', transaction: @transaction, owned_stocks: @owned_stocks),
+footer: (render 'footer') %>

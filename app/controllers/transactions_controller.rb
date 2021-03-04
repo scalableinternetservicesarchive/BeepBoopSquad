@@ -12,6 +12,9 @@ class TransactionsController < ApplicationController
   end
 
   def new
+    if !current_user.nil?
+      @owned_stocks = current_user.stocks_ownership.where("num_shares > ?", 0) 
+    end
     @transaction = Transaction.new
   end
 

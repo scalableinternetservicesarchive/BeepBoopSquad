@@ -22,7 +22,11 @@ class Stock < ApplicationRecord
     req['APCA-API-SECRET-KEY'] = ENV['APCA_API_SECRET_KEY']
     req['Accept'] = 'application/json'
     response = http.request(req)
+    puts 'response code'
+    puts response.code
+    puts 'response body'
     response_json = JSON.parse(response.body)
+    puts response_json
     self.share_price = response_json.dig('last', 'bidprice') || self.share_price
   end
 end

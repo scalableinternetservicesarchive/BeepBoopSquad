@@ -1,3 +1,64 @@
 // Place all the styles related to the Transactions controller here.
 // They will automatically be included in application.scss.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+  .title {
+    text-align: center;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+
+  tbody {
+    overflow-y: auto;
+    overflow-x: hidden;
+    //https://stackoverflow.com/questions/17067294/html-table-with-100-width-with-vertical-scroll-inside-tbody
+  }
+
+  tbody td {
+    width: 19%; /* 19% is less than (100% / 5 cols) = 20% */
+  }
+  
+  .top {
+    float: center;
+    text-align: center;
+  }
+  
+  .bottom {
+    float: center;
+  }
+  
+  .input-field {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    float: center;
+  }
+  
+  .radio-input {
+    text-align: center;
+  }
+  
+  .input-submit {
+    margin: auto;
+    float: center;
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: #4CAF50;
+    padding: 14px 28px;
+    font-size: 22px;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'Arial';
+    color: #ffff;
+    border-radius: 5px;
+  }
+  
+  .back-button {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+  }
+  
