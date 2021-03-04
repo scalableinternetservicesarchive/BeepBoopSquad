@@ -17,7 +17,7 @@
   }
 
   tbody td {
-    width: 19%;
+    width: 19%; /* 19% is less than (100% / 5 cols) = 20% */
   }
   
   .top {
