@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+#https://medium.com/dev-genius/how-to-seed-with-ruby-on-rails-%EF%B8%8F-1d2dceda3e7d
+
+require_relative './stock_seeding'
+
+seed_stocks
