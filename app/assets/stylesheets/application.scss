@@ -183,3 +183,41 @@ input:not([type=radio], [type=submit]) {
   .clearfix {
     clear:both
   }
+
+.navbar-class {
+  background-color: black;
+  width: 100vw;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  left: 0;
+}
+
+.navbar-class ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-class li {
+  float: left;
+  display: inline-block;
+}
+
+.navbar-class li:last-child {
+  float: right;
+}
+
+.navbar-class a {
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  display: inline-block;
+}
+
+.navbar-class a:hover {
+  background-color: #ddd;
+  color: black;
+  padding: 14px 16px;
+}
