@@ -11,11 +11,11 @@
 #
 class User < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: false }
-  has_many :ownerships
+  has_many :ownerships, dependent: :delete_all
   has_many :stocks, through: :ownerships
-  has_many :transactions
-  has_many :portfolio_value_histories
-  has_many :exchanges
+  has_many :transactions, dependent: :delete_all
+  has_many :portfolio_value_histories, dependent: :delete_all
+  has_many :exchanges, dependent: :delete_all
 
   def portfolio_value
     total_value = self.cash_balance
