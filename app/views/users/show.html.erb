@@ -1,3 +1,4 @@
+<div class="login-modal">
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -15,5 +16,7 @@
   <%= @user.password %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Edit', edit_user_path(@user), class: "btn btn-danger"%>
+<br>
+<%= link_to 'Back to Login Screen', "/", class: "btn btn-success"%>
+</div>

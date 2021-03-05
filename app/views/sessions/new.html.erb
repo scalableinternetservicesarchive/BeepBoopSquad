@@ -1,16 +1,18 @@
-<p id=”alert”><%= alert %></p>
+<div class="login-modal">
+<p id="alert"><%= alert %></p>
 <h1>Login</h1>
 <%= form_tag sessions_path do |form| %>
-  <div class=”field”>
+  <div class="field">
     <%= label_tag :name %>
     <%= text_field_tag :name %>
   </div>
-  <div class=”field”>
+  <div class="field">
     <%= label_tag :password %>
     <%= password_field_tag :password %>
   </div>
-  <div class=”actions”>
-    <%= submit_tag "Login" %>
+  <div class="actions">
+    <%= submit_tag "Login", class: "btn btn-success" %>
   </div>
 <% end %>
-<button onclick="window.location.href='/'">Back to Home</button>
+<button onclick="window.location.href='/'" class="btn btn-secondary">Back to Home</button>
+</div>

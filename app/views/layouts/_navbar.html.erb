@@ -1,0 +1,21 @@
+<header class="navbar">
+      <div class="navbar-class">
+        <div class="container">
+
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+
+          <ul>
+            <li><%=link_to "Home", root_path%></li>
+            <li><%=link_to "Stocks", stocks_path%></li>
+            <% if current_user %>
+              <li><%=link_to "Log Out", logout_path%></li>
+            <% else %>
+              <li></li>
+            <% end %>
+          </ul>
+
+
+        </div>
+      </div>
+    </header>

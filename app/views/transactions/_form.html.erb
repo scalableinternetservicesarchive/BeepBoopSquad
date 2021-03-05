@@ -1,36 +1,92 @@
+<p id="notice"><%= notice %></p>
+<%= stylesheet_link_tag 'transactions'%>
+<div>
 <% if current_user %>
-  <%= form_with(model: transaction) do |form| %>
-    <% if transaction.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+<%= form_with(model: transaction) do |form| %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <% if transaction.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
 
-        <ul>
-          <% transaction.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="transaction_type" id="transaction_type" name="transaction_type">
-      <%= form.radio_button :transaction_type, 'buy', :checked => true %>
-      <%= label :buy_selection, 'buy' %>
-      <%= form.radio_button :transaction_type, 'sell' %>
-      <%= label :sell_selection, 'sell' %>
-    </div>
-
-    <div id="stock_symbol">
-      <%= form.label :stock_symbol, "Input Stock Symbol:" %>
-      <%= form.text_field :stock_symbol %>
-    </div>
-
-    <br>
-    <label for="num_shares">Number of Shares: </label>
-    <%= form.number_field :num_shares, min: 1 %>
-    <br>
-    <br>
-    <div class="actions">
-      <%= form.submit "Trade", class: "btn btn-success" %>
+      <ul>
+        <% transaction.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
+
+  <div class="top">
+  <div class="transaction-modal">
+  <h1>New Transaction</h1>
+  <div class="radio-input">
+  <div class="form-check form-check-inline">
+    <%= form.radio_button :transaction_type, 'buy', :checked => true, class: "form-check-input" %>
+    <%= label :buy_selection, 'buy', class: "form-check-label"%>
+  </div>
+  <div class="form-check form-check-inline">
+    <%= form.radio_button :transaction_type, 'sell', class: "form-check-input" %>
+    <%= label :sell_selection, 'sell', class: "form-check-label" %>
+  </div>
+  </div>
+
+  <div class="field">
+    <%= form.label :stock_symbol, "Input Stock Symbol" %>
+    <%= form.text_field :stock_symbol %>
+  </div>
+  <div class="field">
+    <%= form.label :num_shares, "Number of Shares" %>
+    <%= form.number_field :num_shares, min: 1 %>
+  </div>
+  <div class="field">
+    <%= form.submit "Make Trade", class: 'btn btn-success btn-block'%>
+  </div>
+  
+  </div>
+  </div>
+  <br>
+  <div class="bottom">
+  <h2>List of Owned Stocks</h2>
+  <br>
+  <div>
+  <table id="table-no-padding" class="table table-light">
+    <thead class="table-dark">
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Symbol</th>
+    <th scope="col">Price</th>
+    <th scope="col">Shares</th>
+  </tr>
+  </thead>
+  </table>
+  
+  <div class="table-scrollable-content">
+  <table class="table table-light">
+  <tbody>
+    <% @owned_stocks.each_with_index do |ownership, index| %>
+      <% if index % 2 == 0%>
+      <tr class="table-light">
+        <td><%= ownership.stock.name %></td>
+        <td><%= ownership.stock.symbol %></td>
+        <td><%= ownership.stock.share_price %></td>
+        <td><%= ownership.num_shares %></td>
+      </tr>
+      <% else %>
+      <tr class="table-secondary">
+        <td><%= ownership.stock.name %></td>
+        <td><%= ownership.stock.symbol %></td>
+        <td><%= ownership.stock.share_price %></td>
+        <td><%= ownership.num_shares %></td>
+      </tr>
+      <%end%>
+    <% end %>
+  </tbody>
+  </table>
+  </div>
+  </div>
+  </div>
 <% end %>
+<%end%>
+</div>
+<div style="clear: both"></div>
+<br>
