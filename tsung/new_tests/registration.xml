@@ -16,30 +16,30 @@
     <arrivalphase phase="2" duration="5" unit="second">
       <users arrivalrate="2" unit="second" />
     </arrivalphase>
-<!--    <arrivalphase phase="3" duration="5" unit="second">-->
-<!--      <users arrivalrate="4" unit="second" />-->
-<!--    </arrivalphase>-->
-<!--    <arrivalphase phase="4" duration="5" unit="second">-->
-<!--      <users arrivalrate="8" unit="second" />-->
-<!--    </arrivalphase>-->
-<!--    <arrivalphase phase="5" duration="5" unit="second">-->
-<!--      <users arrivalrate="16" unit="second" />-->
-<!--    </arrivalphase>-->
-<!--    <arrivalphase phase="6" duration="5" unit="second">-->
-<!--      <users arrivalrate="32" unit="second" />-->
-<!--    </arrivalphase>-->
-<!--    <arrivalphase phase="7" duration="5" unit="second">-->
-<!--      <users arrivalrate="64" unit="second" />-->
-<!--    </arrivalphase>-->
-<!--    <arrivalphase phase="8" duration="5" unit="second">-->
-<!--      <users arrivalrate="128" unit="second" />-->
-<!--    </arrivalphase>-->
-<!--    <arrivalphase phase="9" duration="5" unit="second">-->
-<!--      <users arrivalrate="256" unit="second" />-->
-<!--    </arrivalphase>-->
-<!--    <arrivalphase phase="10" duration="5" unit="second">-->
-<!--      <users arrivalrate="512" unit="second" />-->
-<!--    </arrivalphase>-->
+    <arrivalphase phase="3" duration="5" unit="second">
+      <users arrivalrate="4" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="4" duration="5" unit="second">
+      <users arrivalrate="8" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="5" duration="5" unit="second">
+      <users arrivalrate="16" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="6" duration="5" unit="second">
+      <users arrivalrate="32" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="7" duration="5" unit="second">
+      <users arrivalrate="64" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="8" duration="5" unit="second">
+      <users arrivalrate="128" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="9" duration="5" unit="second">
+      <users arrivalrate="256" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="10" duration="5" unit="second">
+      <users arrivalrate="512" unit="second" />
+    </arrivalphase>
   </load>
 
   <options>
@@ -63,38 +63,38 @@
               contents_from_file="../request_body/user_body.json"
         />
       </request>
-<!--      &lt;!&ndash; Log In &ndash;&gt;-->
-<!--      <request>-->
-<!--        <http url="/sessions.json"-->
-<!--              method="POST"-->
-<!--              content_type='application/json'-->
-<!--              contents_from_file="../request_body/login_body.json"-->
-<!--        />-->
-<!--      </request>-->
-<!--      &lt;!&ndash; Homepage &ndash;&gt;-->
-<!--      <request>-->
-<!--        <http url="/"-->
-<!--              method="GET"-->
-<!--        />-->
-<!--      </request>-->
-<!--      &lt;!&ndash; Wait &ndash;&gt;-->
-<!--      <thinktime value="5" random="true"/>-->
-<!--      &lt;!&ndash; Visit Exchanges Endpoint &ndash;&gt;-->
-<!--      <request>-->
-<!--        <http url="/exchanges.json"-->
-<!--              method="GET"-->
-<!--        />-->
-<!--      </request>-->
-<!--      &lt;!&ndash; Wait &ndash;&gt;-->
-<!--      <thinktime value="5" random="true"/>-->
-<!--      &lt;!&ndash; Visit Exchanges Endpoint &ndash;&gt;-->
-<!--      <request>-->
-<!--        <http url="/exchanges.json"-->
-<!--              method="POST"-->
-<!--              content_type='application/json'-->
-<!--              contents_from_file="../request_body/exchanges_body.json"-->
-<!--        />-->
-<!--      </request>-->
+      <!-- Log In -->
+      <request>
+        <http url="/sessions.json"
+              method="POST"
+              content_type='application/json'
+              contents_from_file="../request_body/login_body.json"
+        />
+      </request>
+      <!-- Homepage -->
+      <request>
+        <http url="/"
+              method="GET"
+        />
+      </request>
+      <!-- Wait -->
+      <thinktime value="5" random="true"/>
+      <!-- Visit Exchanges Endpoint -->
+      <request>
+        <http url="/exchanges.json"
+              method="GET"
+        />
+      </request>
+      <!-- Wait -->
+      <thinktime value="5" random="true"/>
+      <!-- Visit Exchanges Endpoint -->
+      <request>
+        <http url="/exchanges.json"
+              method="POST"
+              content_type='application/json'
+              contents_from_file="../request_body/exchanges_body.json"
+        />
+      </request>
     </session>
   </sessions>
 </tsung>
