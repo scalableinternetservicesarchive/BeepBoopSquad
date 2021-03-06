@@ -13,7 +13,7 @@ def seed_stocks
       name: row[1],
       share_price: row[2]
     }
-    inv = Stock.create(stock_information)
+    Stock.create_with(stock_information).find_or_create_by(symbol: row[0])
   end
   puts 'Seeding stocks from #{csv_file_path} done.'
 end
