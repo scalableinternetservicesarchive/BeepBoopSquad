@@ -52,14 +52,14 @@
 <!--        <http url="/transactions"-->
 <!--              method="POST"-->
 <!--              content_type='application/json'-->
-<!--              contents_from_file="./transaction_body_buy.json"-->
+<!--              contents_from_file="./transaction_buy_body.json"-->
 <!--        />-->
 <!--      </request>-->
 <!--      <request>-->
 <!--        <http url="/transactions"-->
 <!--              method="POST"-->
 <!--              content_type='application/json'-->
-<!--              contents_from_file="./transaction_body_sell.json"-->
+<!--              contents_from_file="./transaction_sell_body.json"-->
 <!--        />-->
 <!--      </request>-->
 

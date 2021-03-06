@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/local/share/tsung/tsung-1.0.dtd" [] >
+<tsung loglevel="notice">
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers='100000'/>
+  </clients>
+
+  <servers>
+    <server host="BeepBoopSquad.eba-dzbukdri.us-west-2.elasticbeanstalk.com" port="80" type="tcp" />
+  </servers>
+
+  <load>
+    <arrivalphase phase="1" duration="5" unit="second">
+      <users arrivalrate="1" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="2" duration="5" unit="second">
+      <users arrivalrate="2" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="3" duration="5" unit="second">
+      <users arrivalrate="4" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="4" duration="5" unit="second">
+      <users arrivalrate="8" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="5" duration="5" unit="second">
+      <users arrivalrate="16" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="6" duration="5" unit="second">
+      <users arrivalrate="32" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="7" duration="5" unit="second">
+      <users arrivalrate="64" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="8" duration="5" unit="second">
+      <users arrivalrate="128" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="9" duration="5" unit="second">
+      <users arrivalrate="256" unit="second" />
+    </arrivalphase>
+    <arrivalphase phase="10" duration="5" unit="second">
+      <users arrivalrate="512" unit="second" />
+    </arrivalphase>
+  </load>
+
+  <options>
+    <!-- Set connection timeout to 2 seconds -->
+    <option name="global_ack_timeout" value="2000" />
+  </options>
+
+  <sessions>
+    <session name="fundamental_investor" probability="100" type="ts_http">
+      <!-- Homepage -->
+      <request>
+        <http url="/"
+              method="GET"
+        />
+      </request>
+      <!-- Log In -->
+      <request>
+        <http url="/sessions.json"
+              method="POST"
+              content_type='application/json'
+              contents_from_file="../request_body/login_body.json"
+        />
+      </request>
+      <!-- Homepage -->
+      <request>
+        <http url="/"
+              method="GET"
+        />
+      </request>
+      <!-- Wait -->
+      <thinktime value="5" random="true"/>
+      <!-- View Stocks Page -->
+      <request>
+        <http url="/stocks"
+              method="GET"
+        />
+      </request>
+      <!-- Wait -->
+      <thinktime value="5" random="true"/>
+      <!-- Add Stock -->
+      <request>
+        <http url="/stocks.json"
+              method="POST"
+              content_type='application/json'
+              contents_from_file="../request_body/stock_add_body.json"
+        />
+      </request>
+      <!-- View Transactions Page -->
+      <request>
+        <http url="/transactions/new"
+              method="GET"
+        />
+      </request>
+      <!-- Wait -->
+      <thinktime value="5" random="true"/>
+      <!-- Buy Stock -->
+      <request>
+        <http url="/transactions"
+              method="POST"
+              content_type='application/json'
+              contents_from_file="../request_body/transaction_buy_body.json"
+        />
+      </request>
+    </session>
+  </sessions>
+</tsung>
