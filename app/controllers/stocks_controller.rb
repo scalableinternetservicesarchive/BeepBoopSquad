@@ -68,6 +68,15 @@ class StocksController < ApplicationController
     end
   end
 
+  def prd_seed_stocks
+    require_relative '../../db/stock_seeding'
+    seed_stocks
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: "Seeded stocks" }
+      format.json { render json: {"message": "Seeded stocks"}, status: :created }
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

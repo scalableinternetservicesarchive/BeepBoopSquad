@@ -57,6 +57,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def prd_seed_users
+    require_relative '../../db/user_seeding'
+    seed_users
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: "Seeded users" }
+      format.json { render json: {"message": "Seeded users"}, status: :created }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
