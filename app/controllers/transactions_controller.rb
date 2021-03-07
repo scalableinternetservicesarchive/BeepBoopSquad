@@ -20,13 +20,6 @@ class TransactionsController < ApplicationController
 
   # POST /transactions or /transactions.json
   def create
-    if transaction_params[:user_id].nil? || session[:user_id].nil? || current_user.id != transaction_params[:user_id]
-      respond_to do |format|
-        format.html { redirect_to root_path, notice: "Unauthorized request.", status: :unprocessable_entity }
-        format.json { render json: {"error": "Unauthorized request." }, status: :unprocessable_entity }
-      end
-      return
-    end
     @transaction = Transaction.new(user_id: transaction_params[:user_id], stock_id: transaction_params[:stock_id],
                                    num_shares: transaction_params[:num_shares],
                                    transaction_type: transaction_params[:transaction_type])
@@ -41,7 +34,7 @@ class TransactionsController < ApplicationController
         format.html { redirect_to root_path, notice: "Transaction was successfully created." }
         format.json { render :show, status: :created, location: @transaction }
       else
-        format.html { render new_transaction_path, notice: "Transaction unsuccessful. Please try again" }
+        format.html { render :new, notice: "Transaction unsuccessful. Please try again" }
         format.json { render json: @transaction.errors, status: :unprocessable_entity }
       end
     end
