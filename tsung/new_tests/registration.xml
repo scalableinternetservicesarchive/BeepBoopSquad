@@ -49,52 +49,74 @@
 
   <sessions>
     <session name="registration" probability="100" type="ts_http">
+
+      <setdynvars sourcetype="erlang" callback="ts_user_server:get_unique_id">
+        <var name="username"/>
+      </setdynvars>
+
       <!-- Homepage -->
       <request>
         <http url="/"
               method="GET"
         />
       </request>
+
       <!-- Sign Up -->
-      <request>
-        <http url="/users.json"
-              method="POST"
-              content_type='application/json'
-              contents_from_file="../request_body/user_body.json"
-        />
-      </request>
-      <!-- Log In -->
-      <request>
-        <http url="/sessions.json"
-              method="POST"
-              content_type='application/json'
-              contents_from_file="../request_body/login_body.json"
-        />
-      </request>
+      <transaction name="sign_up">
+        <request subst="true">
+          <http url="/users.json"
+                method="POST"
+                content_type="application/json"
+                contents="{&quot;name&quot;: &quot;%%_username%%&quot;, &quot;password&quot;: &quot;password&quot;, &quot;cash_balance&quot;: 15000}"
+          />
+        </request>
+      </transaction>
+
+      <!-- Login -->
+      <transaction name="login">
+        <request subst="true">
+          <http url="/sessions.json"
+                method="POST"
+                content_type="application/json"
+                contents="{&quot;name&quot;: &quot;%%_username%%&quot;, &quot;password&quot;: &quot;password&quot;}"
+          />
+        </request>
+      </transaction>
+
       <!-- Homepage -->
       <request>
         <http url="/"
               method="GET"
         />
       </request>
+
       <!-- Wait -->
       <thinktime value="5" random="true"/>
+
       <!-- Visit Exchanges Endpoint -->
-      <request>
-        <http url="/exchanges.json"
-              method="GET"
-        />
-      </request>
+      <transaction name="visit_new_exchange_page">
+        <request>
+          <http url="/exchanges/new"
+                method="GET"
+          />
+        </request>
+      </transaction>
+
+
       <!-- Wait -->
       <thinktime value="5" random="true"/>
-      <!-- Visit Exchanges Endpoint -->
-      <request>
-        <http url="/exchanges.json"
-              method="POST"
-              content_type='application/json'
-              contents_from_file="../request_body/exchanges_body.json"
-        />
-      </request>
+
+      <!-- Make Deposit -->
+      <transaction name="make_deposit">
+        <request>
+          <http url="/exchanges.json"
+                method="POST"
+                content_type='application/json'
+                contents_from_file="../request_body/exchanges_body.json"
+          />
+        </request>
+      </transaction>
+
     </session>
   </sessions>
 </tsung>
