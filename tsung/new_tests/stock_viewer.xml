@@ -43,60 +43,116 @@
   </load>
 
   <options>
+    <option name="file_server" id="default" value="../data/users.csv"></option>
     <!-- Set connection timeout to 2 seconds -->
     <option name="global_ack_timeout" value="2000" />
   </options>
 
   <sessions>
     <session name="stock_viewer" probability="100" type="ts_http">
-      <!-- Homepage -->
-      <request>
-        <http url="/"
-              method="GET"
-        />
-      </request>
+
+      <setdynvars sourcetype="file" fileid="default" delimiter="," order="iter">
+        <var name="username" />
+        <var name="password" />
+        <var name="balance" />
+      </setdynvars>
+
+      <setdynvars sourcetype="random_number" start="1" end="500">
+        <var name="stock_id" />
+      </setdynvars>
+
       <!-- Log In -->
-      <request>
-        <http url="/sessions.json"
-              method="POST"
-              content_type='application/json'
-              contents_from_file="../request_body/login_body.json"
-        />
-      </request>
+      <transaction name="visit_login_page">
+        <request>
+          <http url="/login"
+                method="GET"
+          />
+        </request>
+      </transaction>
+
+      <transaction name="submit_login_creds">
+        <request subst="true">
+          <http url="/sessions.json"
+                method="POST"
+                content_type="application/json"
+                contents="{&quot;name&quot;: &quot;%%_username%%&quot;, &quot;password&quot;: &quot;%%_password%%&quot;}"
+          />
+        </request>
+      </transaction>
+
       <!-- Homepage -->
-      <request>
-        <http url="/"
-              method="GET"
-        />
-      </request>
+      <transaction name="visit_homepage">
+        <request>
+          <http url="/"
+                method="GET"
+          />
+        </request>
+      </transaction>
+
       <!-- Wait -->
       <thinktime value="5" random="true"/>
+
       <!-- View Stocks Page -->
-      <request>
-        <http url="/stocks"
-              method="GET"
-        />
-      </request>
+      <transaction name="visit_stocks_page">
+        <request>
+          <http url="/stocks"
+                method="GET"
+          />
+        </request>
+      </transaction>
+
       <!-- Wait -->
       <thinktime value="5" random="true"/>
-      <!-- Add Stock -->
-      <request>
-        <http url="/stocks.json"
-              method="POST"
-              content_type='application/json'
-              contents_from_file="../request_body/stock_add_body.json"
-        />
-      </request>
+
+      <!-- View Transactions Page -->
+      <transaction name="visit_transactions_page">
+        <request>
+          <http url="/transactions/new"
+                method="GET"
+          />
+        </request>
+      </transaction>
+
       <!-- Wait -->
       <thinktime value="5" random="true"/>
-      <!-- Remove Stock -->
-<!--      <request>-->
-<!--        <http url="/stocks.json"-->
-<!--              method="POST"-->
-<!--              content_type='application/json'-->
-<!--              contents_from_file="../request_body/stock_remove_body.json"-->
-<!--        />-->
-<!--      </request>-->
+
+      <!-- Buy Stock -->
+      <transaction name="buy_stock">
+        <request subst="true">
+          <http url="/transactions"
+                method="POST"
+                content_type="application/json"
+                contents="{&quot;stock_id&quot;: %%_stock_id%%, &quot;num_shares&quot;: 5, &quot;transaction_type&quot;: &quot;buy&quot;}"
+          />
+        </request>
+      </transaction>
+
+      <!-- Wait -->
+      <thinktime value="5" random="true"/>
+
+      <!-- View Transactions Page -->
+      <transaction name="visit_transactions_page_2">
+        <request>
+          <http url="/transactions/new"
+                method="GET"
+          />
+        </request>
+      </transaction>
+
+      <!-- Wait -->
+      <thinktime value="5" random="true"/>
+
+      <!-- Sell Stock -->
+      <transaction name="sell_stock">
+        <request subst="true">
+          <http url="/transactions"
+                method="POST"
+                content_type="application/json"
+                contents="{&quot;stock_id&quot;: %%_stock_id%%, &quot;num_shares&quot;: 5, &quot;transaction_type&quot;: &quot;sell&quot;}"
+          />
+        </request>
+      </transaction>
+
     </session>
   </sessions>
 </tsung>
