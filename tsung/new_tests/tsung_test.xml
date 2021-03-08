@@ -6,7 +6,7 @@
   </clients>
 
   <servers>
-    <server host="BeepBoopSquad.eba-dzbukdri.us-west-2.elasticbeanstalk.com" port="80" type="tcp" />
+    <server host="localhost" port="3000" type="tcp" />
   </servers>
 
   <load>
@@ -41,10 +41,10 @@
       <users arrivalrate="2" unit="second" />
     </arrivalphase>
   </load>
-
+  
 
   <options>
-    <option name="file_server" id="default" value="users.csv"></option>
+    <option name="file_server" id="default" value="users.csv"/>
     <!-- Set connection timeout to 2 seconds -->
     <option name="global_ack_timeout" value="2000" />
   </options>
@@ -101,7 +101,7 @@
 
       <!-- Wait -->
       <thinktime value="5" random="true"/>
-
+	
       <!-- View Stocks Page -->
       <request>
         <http url="/stocks"
