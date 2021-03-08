@@ -37,6 +37,10 @@ class Transaction < ApplicationRecord
   end
 
   def user_can_make_transaction
+    if self.user.nil?
+      errors.add :base, "No user present."
+      return
+    end
     self.cost_per_share = stock.share_price
     case transaction_type
     when "buy"
