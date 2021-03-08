@@ -5,7 +5,7 @@
     <client host="localhost" use_controller_vm="true" maxusers='5000'/>
   </clients>
   <servers>
-    <server host="BeepBoopSquad.eba-dzbukdri.us-west-2.elasticbeanstalk.com" port="3000" type="tcp"/>
+    <server host="BeepBoopSquad.eba-dzbukdri.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
   </servers>
   <load>
     <arrivalphase phase="1" duration="10" unit="second">
