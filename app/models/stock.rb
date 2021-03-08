@@ -13,6 +13,10 @@ require "net/http"
 require "uri"
 
 class Stock < ApplicationRecord
+  validates :symbol, presence: true, uniqueness: { case_sensitive: false }
+  has_many :ownerships, dependent: :delete_all
+  after_update :update_ownerships
+
   def fetch_stock_price
     url = URI.parse('https://data.alpaca.markets/v1/last_quote/stocks/' + self.symbol)
     http = Net::HTTP.new(url.host, url.port)
@@ -24,9 +28,16 @@ class Stock < ApplicationRecord
     response = http.request(req)
     puts 'response code'
     puts response.code
-    puts 'response body'
-    response_json = JSON.parse(response.body)
-    puts response_json
-    self.share_price = response_json.dig('last', 'bidprice') || self.share_price
+    if response.code == 429
+    else
+      puts 'response body'
+      response_json = JSON.parse(response.body)
+      puts response_json
+      self.share_price = response_json.dig('last', 'bidprice') || self.share_price
+    end
+  end
+
+  def update_ownerships
+    Ownership.where(stock: self).touch_all
   end
 end

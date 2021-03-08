@@ -1,0 +1,13 @@
+  <tbody>
+      <% if ownership.id % 2 == 0%>
+      <tr class="table-light">
+        <%= render partial: 'stocks/stock', locals: {stock: ownership.stock }, cached: true %>
+        <td><%= ownership.num_shares %></td>
+      </tr>
+      <% else %>
+      <tr class="table-secondary">
+        <%= render partial: 'stocks/stock', locals: { stock: ownership.stock }, cached: true %>
+        <td><%= ownership.num_shares %></td>
+      </tr>
+      <%end%>
+  </tbody>
