@@ -44,7 +44,7 @@
 
 
   <options>
-    <option name="file_server" id="default" value="users.csv"></option>
+    <option name="file_server" id="default" value="../data/users.csv"></option>
     <!-- Set connection timeout to 2 seconds -->
     <option name="global_ack_timeout" value="2000"/>
   </options>
