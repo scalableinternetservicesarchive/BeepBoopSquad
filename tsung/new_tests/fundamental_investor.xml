@@ -104,22 +104,20 @@
       <!-- Wait -->
       <thinktime value="5" random="true"/>
 
-
-
-
-      <!-- Add Stock -->
-      <transaction name="add_stock">
+      <!-- View Transactions Page -->
+      <transaction name="view_transactions">
         <request>
-          <http url="/stocks.json"
-                method="POST"
-                content_type='application/json'
-                contents_from_file="../request_body/stock_add_body.json"
+          <http url="/transactions"
+                method="GET"
           />
         </request>
       </transaction>
 
-      <!-- View Transactions Page -->
-      <transaction name="view_new_transactions_page">
+      <!-- Wait -->
+      <thinktime value="5" random="true"/>
+
+      <!-- View New Transaction Page -->
+      <transaction name="view_new_transaction_page">
         <request>
           <http url="/transactions/new"
                 method="GET"
