@@ -41,6 +41,7 @@
   </div>
   <br>
   <div>
+  <button id="close-modal-button" onclick="switchTables()" class="btn btn-success btn-block" data-remote="true">Show All Stocks</button>
   <table id="table-no-padding" class="table table-light">
     <thead class="table-dark">
   <tr>
@@ -51,26 +52,8 @@
   </thead>
   </table>
   
-  <div class="table-scrollable-content">
-  <table id = "myTable" class="table table-light">
-  <tbody>
-    <% stocks.each_with_index do |stock, index| %>
-      <% if index % 2 == 0%>
-      <tr class="table-light">
-        <td><%= stock.name %></td>
-        <td><%= stock.symbol %></td>
-        <td><%= stock.share_price %></td>
-      </tr>
-      <% else %>
-      <tr class="table-secondary">
-        <td><%= stock.name %></td>
-        <td><%= stock.symbol %></td>
-        <td><%= stock.share_price %></td>
-      </tr>
-      <%end%>
-    <% end %>
-  </tbody>
-  </table>
+  <div id="table-placeholder" class ="table-placeholder">
+  <%= render 'display_stocks_limited'%>
   </div>
   </div>
   </div>
@@ -109,6 +92,20 @@ function openModalFunction() {
 function closeModalFunction() {
   var bgmodal;
   bgmodal = document.getElementById("bg-modal-shade").style.display = "none";
+}
+
+function switchTables() {
+var table_display, table_type;
+table_display = document.getElementById("table-placeholder");
+table_type = document.getElementById("table-type");
+if (table_type.value == "limited") {
+  table_display.textContent = '';
+  table_display.insertAdjacentHTML('afterbegin', '<%= escape_javascript(render "display_stocks_all", current_user: current_user)%>');
+  console.log("table_type.value: " + table_type.value);
+}
+else {
+  console.log("table is already ALL: table_type.value: " + table_type.value);
+}
 }
 </script>
 

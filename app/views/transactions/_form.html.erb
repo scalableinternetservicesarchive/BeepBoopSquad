@@ -64,21 +64,24 @@
   </thead>
   </table>
   <div id="table-placeholder" class ="table-placeholder">
-    <%= render 'show_stocks_limited', current_user: current_user%>
+    <%= render 'display_stocks_limited', current_user: current_user%>
   </div>
 <%end%>
 <br>
 </div>
 
 <script>
-var toggle_variable = 0;
 function switchTables() {
-var table_display;
+var table_display, table_type;
 table_display = document.getElementById("table-placeholder");
-if (toggle_variable == 0) {
+table_type = document.getElementById("table-type");
+if (table_type.value == "limited") {
   table_display.textContent = '';
-  table_display.insertAdjacentHTML('afterbegin', '<%= escape_javascript(render "show_stocks_all", current_user: current_user)%>');
-  toggle_variable = 1;
+  table_display.insertAdjacentHTML('afterbegin', '<%= escape_javascript(render "display_stocks_all", current_user: current_user)%>');
+  console.log("table_type.value: " + table_type.value);
+}
+else {
+  console.log("table is already ALL: table_type.value: " + table_type.value);
 }
 }
 </script>

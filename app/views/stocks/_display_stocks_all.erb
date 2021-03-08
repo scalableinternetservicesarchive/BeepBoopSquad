@@ -1,0 +1,22 @@
+  <div class="table-scrollable-content">
+  <table id = "myTable" class="table table-light">
+  <tbody>
+    <% Stock.all.each_with_index do |stock, index| %>
+      <% if index % 2 == 0%>
+      <tr class="table-light">
+        <td><%= stock.name %></td>
+        <td><%= stock.symbol %></td>
+        <td><%= stock.share_price %></td>
+      </tr>
+      <% else %>
+      <tr class="table-secondary">
+        <td><%= stock.name %></td>
+        <td><%= stock.symbol %></td>
+        <td><%= stock.share_price %></td>
+      </tr>
+      <%end%>
+    <% end %>
+  </tbody>
+  </table>
+  <input type="hidden" id="table-type" name="table-type" value="all">
+  </div>
