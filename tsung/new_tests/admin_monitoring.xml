@@ -38,13 +38,32 @@
 
 
   <options>
-    <option name="file_server" id="default" value="../data/users.csv"></option>
+    <option name="file_server" id="default" value="../data/users.csv"/>
     <!-- Set connection timeout to 2 seconds -->
     <option name="global_ack_timeout" value="2000"/>
   </options>
 
   <sessions>
-    <session name="fundamental_investor" probability="100" type="ts_http">
+    <session name="auditor" probability="5" type="ts_http">
+      <transaction name="view_transaction_history">
+        <request>
+          <http url="/transactions"
+                method="GET"/>
+        </request>
+      </transaction>
+
+      <thinktime value="3" random="true"/>
+
+      <transaction name="view_exchanges_history">
+        <request subst="true">
+          <http url="/exchanges"
+                method="GET"/>
+        </request>
+      </transaction>
+
+    </session>
+
+    <session name="trader" probability="95" type="ts_http">
 
       <setdynvars sourcetype="file" fileid="default" delimiter="," order="iter">
         <var name="username"/>
@@ -55,20 +74,6 @@
       <setdynvars sourcetype="random_number" start="1" end="500">
         <var name="stock_id"/>
       </setdynvars>
-
-      <!-- Homepage -->
-      <request>
-        <http url="/"
-              method="GET"
-        />
-      </request>
-
-      <!-- Log In -->
-      <request>
-        <http url="/login"
-              method="GET"
-        />
-      </request>
 
       <transaction name="login">
         <request subst="true">
@@ -81,25 +86,18 @@
       </transaction>
 
       <!-- Homepage -->
-      <request>
-        <http url="/"
-              method="GET"
-        />
-      </request>
-
-      <!-- Wait -->
-      <thinktime value="5" random="true"/>
-
-      <!-- View Stocks Page -->
-      <transaction name="view_stocks_list">
+      <transaction name="make_deposit">
         <request>
-          <http url="/stocks"
-                method="GET"
+          <http url="/exchanges.json"
+                method="POST"
+                content_type='application/json'
+                contents_from_file="../request_body/exchanges_body.json"
           />
         </request>
       </transaction>
+
       <!-- Wait -->
-      <thinktime value="5" random="true"/>
+      <thinktime value="2" random="true"/>
 
       <!-- Buy Stock -->
       <transaction name="buy_stock">
@@ -111,18 +109,6 @@
           />
         </request>
       </transaction>
-
-      <thinktime value="3" random="true"/>
-      <transaction name="view_transaction_history">
-        <request>
-          <http url="/transactions"
-                method="GET"/>
-        </request>
-      </transaction>
-
-      <!-- Wait -->
-      <thinktime value="5" random="true"/>
-
 
     </session>
   </sessions>
