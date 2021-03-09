@@ -44,7 +44,7 @@
   </options>
 
   <sessions>
-    <session name="auditor" probability="5" type="ts_http">
+    <session name="auditor" probability="100" type="ts_http">
       <transaction name="view_transaction_history">
         <request>
           <http url="/transactions"
@@ -58,55 +58,6 @@
         <request subst="true">
           <http url="/exchanges"
                 method="GET"/>
-        </request>
-      </transaction>
-
-    </session>
-
-    <session name="trader" probability="95" type="ts_http">
-
-      <setdynvars sourcetype="file" fileid="default" delimiter="," order="iter">
-        <var name="username"/>
-        <var name="password"/>
-        <var name="balance"/>
-      </setdynvars>
-
-      <setdynvars sourcetype="random_number" start="1" end="500">
-        <var name="stock_id"/>
-      </setdynvars>
-
-      <transaction name="login">
-        <request subst="true">
-          <http url="/sessions.json"
-                method="POST"
-                content_type="application/json"
-                contents="{&quot;name&quot;: &quot;%%_username%%&quot;, &quot;password&quot;: &quot;%%_password%%&quot;}"
-          />
-        </request>
-      </transaction>
-
-      <!-- Homepage -->
-      <transaction name="make_deposit">
-        <request>
-          <http url="/exchanges.json"
-                method="POST"
-                content_type='application/json'
-                contents_from_file="../request_body/exchanges_body.json"
-          />
-        </request>
-      </transaction>
-
-      <!-- Wait -->
-      <thinktime value="2" random="true"/>
-
-      <!-- Buy Stock -->
-      <transaction name="buy_stock">
-        <request subst="true">
-          <http url="/transactions"
-                method="POST"
-                content_type="application/json"
-                contents="{&quot;stock_id&quot;: %%_stock_id%%, &quot;num_shares&quot;: 7, &quot;transaction_type&quot;: &quot;buy&quot;}"
-          />
         </request>
       </transaction>
 
