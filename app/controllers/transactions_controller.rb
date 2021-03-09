@@ -5,6 +5,7 @@ class TransactionsController < ApplicationController
   # GET /transactions or /transactions.json
   def index
     @transactions = Transaction.all.includes(:stock, :user)
+    @transactions = @transactions.first(100)
   end
 
   # GET /transactions/1 or /transactions/1.json

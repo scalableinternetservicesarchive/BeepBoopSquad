@@ -5,6 +5,7 @@ class ExchangesController < ApplicationController
   # GET /exchanges or /exchanges.json
   def index
     @exchanges = Exchange.all.includes(:user)
+    @exchanges = @exchanges.first(100)
   end
 
   # GET /exchanges/1 or /exchanges/1.json
