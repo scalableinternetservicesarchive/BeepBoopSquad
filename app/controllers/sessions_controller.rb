@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
   skip_forgery_protection
+  caches_page :new
+
   #https://medium.com/@wintermeyer/authentication-from-scratch-with-rails-5-2-92d8676f6836
   def new
   end
@@ -8,6 +10,7 @@ class SessionsController < ApplicationController
     user = User.find_by_name(params[:name])
     if user && user.password == params[:password]
       session[:user_id] = user.id
+      expire_page :controller => "home", :action => :index
       redirect_to root_url, notice: "Logged in!"
     else
       flash.now[:alert] = "Email or password is invalid"
@@ -17,6 +20,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    expire_page :controller => "home", :action => :index
     redirect_to root_url, notice: "Logged out!"
   end
 end
