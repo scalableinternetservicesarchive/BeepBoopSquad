@@ -34,10 +34,6 @@ class TransactionsController < ApplicationController
         format.html { redirect_to root_path, notice: "Transaction was successfully created." }
         format.json { render :show, status: :created, location: @transaction }
       else
-        unless current_user.nil?
-          @owned_stocks = current_user.stocks_ownership.where("num_shares > ?", 0)
-        end
-        @transaction = Transaction.new
         format.html { render :new, notice: "Transaction unsuccessful. Please try again" }
         format.json { render json: @transaction.errors, status: :unprocessable_entity }
       end
