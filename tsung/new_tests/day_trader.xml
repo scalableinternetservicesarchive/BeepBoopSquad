@@ -6,54 +6,61 @@
   </clients>
 
   <servers>
-    <server host="BeepBoopSquad.eba-dzbukdri.us-west-2.elasticbeanstalk.com" port="80" type="tcp" />
+    <server host="BeepBoopSquad.eba-dzbukdri.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
   </servers>
 
   <load>
     <arrivalphase phase="1" duration="5" unit="second">
-      <users arrivalrate="1" unit="second" />
+      <users arrivalrate="1" unit="second"/>
     </arrivalphase>
     <arrivalphase phase="2" duration="5" unit="second">
-      <users arrivalrate="2" unit="second" />
+      <users arrivalrate="2" unit="second"/>
     </arrivalphase>
     <arrivalphase phase="3" duration="5" unit="second">
-      <users arrivalrate="4" unit="second" />
+      <users arrivalrate="4" unit="second"/>
     </arrivalphase>
     <arrivalphase phase="4" duration="5" unit="second">
-      <users arrivalrate="8" unit="second" />
+      <users arrivalrate="8" unit="second"/>
     </arrivalphase>
     <arrivalphase phase="5" duration="5" unit="second">
-      <users arrivalrate="16" unit="second" />
+      <users arrivalrate="16" unit="second"/>
     </arrivalphase>
     <arrivalphase phase="6" duration="5" unit="second">
-      <users arrivalrate="16" unit="second" />
+      <users arrivalrate="16" unit="second"/>
     </arrivalphase>
     <arrivalphase phase="7" duration="5" unit="second">
-      <users arrivalrate="32" unit="second" />
+      <users arrivalrate="32" unit="second"/>
     </arrivalphase>
     <arrivalphase phase="8" duration="5" unit="second">
-      <users arrivalrate="32" unit="second" />
+      <users arrivalrate="32" unit="second"/>
     </arrivalphase>
   </load>
 
 
   <options>
-    <option name="file_server" id="default" value="../data/users.csv"></option>
+    <option name="file_server" id="default" value="../data/users.csv"/>
+    <option name="file_server" id="stocks" value="../data/stocks5.csv"/>
     <!-- Set connection timeout to 2 seconds -->
-    <option name="global_ack_timeout" value="2000" />
+    <option name="global_ack_timeout" value="2000"/>
   </options>
 
   <sessions>
     <session name="fundamental_investor" probability="100" type="ts_http">
 
       <setdynvars sourcetype="file" fileid="default" delimiter="," order="iter">
-        <var name="username" />
-        <var name="password" />
-        <var name="balance" />
+        <var name="username"/>
+        <var name="password"/>
+        <var name="balance"/>
       </setdynvars>
 
       <setdynvars sourcetype="random_number" start="1" end="500">
-        <var name="stock_id" />
+        <var name="stock_id"/>
+      </setdynvars>
+
+      <setdynvars sourcetype="file" fileid="stocks" delimiter="," order="iter">
+        <var name="stock_symbol"/>
+        <var name="stock_name"/>
+        <var name="stock_share_price"/>
       </setdynvars>
 
       <!-- Log In -->
@@ -87,18 +94,6 @@
       <!-- Wait -->
       <thinktime value="5" random="true"/>
 
-      <!-- View Stocks Page -->
-      <transaction name="visit_stocks_page">
-        <request>
-          <http url="/stocks"
-                method="GET"
-          />
-        </request>
-      </transaction>
-
-      <!-- Wait -->
-      <thinktime value="5" random="true"/>
-
       <!-- View Transactions Page -->
       <transaction name="view_new_transactions_page">
         <request>
@@ -114,7 +109,7 @@
           <http url="/transactions"
                 method="POST"
                 content_type="application/json"
-                contents="{&quot;stock_id&quot;: %%_stock_id%%, &quot;num_shares&quot;: 5, &quot;transaction_type&quot;: &quot;buy&quot;}"
+                contents="{&quot;stock_symbol&quot;: %%_stock_symbol%%, &quot;num_shares&quot;: 5, &quot;transaction_type&quot;: &quot;buy&quot;}"
           />
         </request>
       </transaction>
@@ -137,8 +132,8 @@
           <http url="/transactions"
                 method="POST"
                 content_type="application/json"
-  		          contents="{&quot;stock_id&quot;: %%_stock_id%%, &quot;num_shares&quot;: 5, &quot;transaction_type&quot;: &quot;sell&quot;}"
-  		    />
+                contents="{&quot;stock_symbol&quot;: %%_stock_symbol%%, &quot;num_shares&quot;: 5, &quot;transaction_type&quot;: &quot;sell&quot;}"
+          />
         </request>
       </transaction>
 
