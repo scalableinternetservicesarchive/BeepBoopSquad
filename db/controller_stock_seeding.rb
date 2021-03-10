@@ -1,7 +1,7 @@
 require 'csv'
 
-def seed_stocks
-  csv_file_path = Rails.root.join('db', 'data', 'stocks.csv')
+def seed_stocks(id)
+  csv_file_path = Rails.root.join('db', 'data', 'stocks' + id + '.csv')
   puts 'Seeding stocks from #{csv_file_path}...'
   f = File.new(csv_file_path, 'r')
   csv = CSV.new(f)

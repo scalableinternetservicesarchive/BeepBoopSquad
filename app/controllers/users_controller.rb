@@ -57,6 +57,27 @@ class UsersController < ApplicationController
     end
   end
 
+  def prd_seed_users
+    require_relative '../../db/controller_user_seeding'
+    if params[:seed_id].nil?
+      input = ""
+    else
+      input = params[:seed_id]
+    end
+    if input.to_i > 5 || input.to_i < 0
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: "Unsuccessful seed. File users" + input.to_s + ".csv doesn't exist" }
+        format.json { render json: {"message": "Unsuccessful seed. File users" + input.to_s + ".csv doesn't exist"  }, status: :unprocessable_entity}
+      end
+    else
+      seed_users(input)
+    end
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: "Seeded users with file users" + input.to_s + ".csv" }
+      format.json { render json: {"message": "Seeded users with file users" + input.to_s + ".csv" }, status: :created }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
