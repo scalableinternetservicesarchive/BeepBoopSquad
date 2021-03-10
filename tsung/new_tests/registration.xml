@@ -49,7 +49,6 @@
 
   <sessions>
     <session name="registration" probability="100" type="ts_http">
-
       <setdynvars sourcetype="erlang" callback="ts_user_server:get_unique_id">
         <var name="username"/>
       </setdynvars>
@@ -117,6 +116,70 @@
         </request>
       </transaction>
 
+      <thinktime value="5" random="true"/>
+
+      <!-- Make Deposit -->
+      <transaction name="make_deposit_2">
+        <request>
+          <http url="/exchanges.json"
+                method="POST"
+                content_type='application/json'
+                contents_from_file="../request_body/exchanges_body.json"
+          />
+        </request>
+      </transaction>
+
+      <thinktime value="5" random="true"/>
+
+      <!-- Make Deposit -->
+      <transaction name="make_withdrawal">
+        <request>
+          <http url="/exchanges.json"
+                method="POST"
+                content_type='application/json'
+                contents_from_file="../request_body/withdraw_body.json"
+          />
+        </request>
+      </transaction>
+
+      <thinktime value="5" random="true"/>
+
+      <!-- Make Deposit -->
+      <transaction name="make_deposit_3">
+        <request>
+          <http url="/exchanges.json"
+                method="POST"
+                content_type='application/json'
+                contents_from_file="../request_body/exchanges_body.json"
+          />
+        </request>
+      </transaction>
+
+      <thinktime value="5" random="true"/>
+
+      <!-- Make Deposit -->
+      <transaction name="make_withdrawal_2">
+        <request>
+          <http url="/exchanges.json"
+                method="POST"
+                content_type='application/json'
+                contents_from_file="../request_body/withdraw_body.json"
+          />
+        </request>
+      </transaction>
+
+      <thinktime value="5" random="true"/>
+
+      <!-- Make Deposit -->
+      <transaction name="make_withdrawal_3">
+        <request>
+          <http url="/exchanges.json"
+                method="POST"
+                content_type='application/json'
+                contents_from_file="../request_body/withdraw_body.json"
+          />
+        </request>
+      </transaction>
     </session>
   </sessions>
 </tsung>
