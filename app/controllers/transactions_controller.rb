@@ -23,8 +23,8 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new(user_id: transaction_params[:user_id], stock_id: transaction_params[:stock_id],
                                    num_shares: transaction_params[:num_shares],
                                    transaction_type: transaction_params[:transaction_type])
-    if transaction_params[:stock_symbol].present?
-      @transaction.stock = Stock.find_by_symbol transaction_params[:stock_symbol]
+    if params[:stock_symbol].present?
+      @transaction.stock = Stock.find_by_symbol params[:stock_symbol] || Stock.first
     end
     if @transaction.user.nil?
       @transaction.user = current_user
@@ -34,7 +34,7 @@ class TransactionsController < ApplicationController
         format.html { redirect_to root_path, notice: "Transaction was successfully created." }
         format.json { render :show, status: :created, location: @transaction }
       else
-        format.html { render :new, notice: "Transaction unsuccessful. Please try again" }
+        format.html { render :new, notice: "Transaction unsuccessful. Please try again", status: :unprocessable_entity }
         format.json { render json: @transaction.errors, status: :unprocessable_entity }
       end
     end
