@@ -15,7 +15,7 @@ require "uri"
 class Stock < ApplicationRecord
   validates :symbol, presence: true, uniqueness: { case_sensitive: false }
   has_many :ownerships, dependent: :delete_all
-  after_update :update_ownerships
+  #after_update :update_ownerships
 
   def fetch_stock_price
     url = URI.parse('https://data.alpaca.markets/v1/last_quote/stocks/' + self.symbol)
@@ -37,7 +37,10 @@ class Stock < ApplicationRecord
     end
   end
 
+  """
+  #the below is not needed if we aren't doing russian doll caching
   def update_ownerships
     Ownership.where(stock: self).touch_all
   end
+  """
 end
