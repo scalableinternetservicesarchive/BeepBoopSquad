@@ -55,19 +55,19 @@
   <table id = "myTable" class="table table-light">
   <tbody>
     <% stocks.each_with_index do |stock, index| %>
-      <% if index % 2 == 0%>
-      <tr class="table-light">
-        <td><%= stock.name %></td>
-        <td><%= stock.symbol %></td>
-        <td><%= stock.share_price %></td>
-      </tr>
-      <% else %>
-      <tr class="table-secondary">
-        <td><%= stock.name %></td>
-        <td><%= stock.symbol %></td>
-        <td><%= stock.share_price %></td>
-      </tr>
-      <%end%>
+    <% if index % 2 == 0%>
+    <tr class="table-light">
+    <% cache stock do %>
+      <%= render stock %>
+    <% end %>
+    </tr>
+    <% else %>
+    <tr class="table-secondary">
+      <% cache stock do %>
+      <%= render stock %>
+    <% end %>
+    </tr>
+    <% end %>
     <% end %>
   </tbody>
   </table>
