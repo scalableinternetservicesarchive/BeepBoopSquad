@@ -6,7 +6,7 @@
         <button id="close-modal-button" onclick="closeModalFunction()" class="close-modal-button">+</button>
         <%= image_tag "money.png", alt: "picture of stonks", class: "image-icon" %>
         <h2>New Stock</h2>
-        <%= form_with(model: new_stock, url: stocks_path, method: :post) do |form| %>
+        <%= form_with(model: Stock.new, url: stocks_path, method: :post) do |form| %>
           <div class="field">
             <%= form.label :name, "Name", class: "label" %>
             <%= form.text_field :name %>
@@ -55,19 +55,19 @@
   <table id = "myTable" class="table table-light">
   <tbody>
     <% stocks.each_with_index do |stock, index| %>
-    <% if index % 2 == 0%>
-    <tr class="table-light">
-    <% cache stock do %>
-      <%= render stock %>
-    <% end %>
-    </tr>
-    <% else %>
-    <tr class="table-secondary">
-      <% cache stock do %>
-      <%= render stock %>
-    <% end %>
-    </tr>
-    <% end %>
+      <% if index % 2 == 0%>
+      <tr class="table-light">
+        <td><%= stock.name %></td>
+        <td><%= stock.symbol %></td>
+        <td><%= stock.share_price %></td>
+      </tr>
+      <% else %>
+      <tr class="table-secondary">
+        <td><%= stock.name %></td>
+        <td><%= stock.symbol %></td>
+        <td><%= stock.share_price %></td>
+      </tr>
+      <%end%>
     <% end %>
   </tbody>
   </table>

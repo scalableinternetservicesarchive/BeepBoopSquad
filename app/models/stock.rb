@@ -28,7 +28,7 @@ class Stock < ApplicationRecord
     response = http.request(req)
     puts 'response code'
     puts response.code
-    if response.code == 429 || response.code == 404 || response.code == 401
+    if response.code != 200 && response.code != 201
     else
       puts 'response body'
       response_json = JSON.parse(response.body)
