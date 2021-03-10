@@ -9,5 +9,7 @@
 #https://medium.com/dev-genius/how-to-seed-with-ruby-on-rails-%EF%B8%8F-1d2dceda3e7d
 
 require_relative './stock_seeding'
+require_relative './user_seeding'
 
 seed_stocks
+seed_users
