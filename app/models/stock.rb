@@ -9,6 +9,10 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
+# Indexes
+#
+#  index_stocks_on_symbol  (symbol)
+#
 require "net/http"
 require "uri"
 
