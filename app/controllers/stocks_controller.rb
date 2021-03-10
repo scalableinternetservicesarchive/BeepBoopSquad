@@ -68,6 +68,14 @@ class StocksController < ApplicationController
     end
   end
 
+  def destroy_stocks
+    Stock.destroy_all
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: "All stocks were destroyed" }
+      format.json { render json: {"message": "All stocks were destroyed" }, status: :created }
+    end
+  end
+
   def prd_seed_stocks
     require_relative '../../db/controller_stock_seeding'
     if params[:seed_id].nil?
@@ -75,18 +83,18 @@ class StocksController < ApplicationController
     else
       input = params[:seed_id]
     end
-    if input.to_i > 5 || input.to_i < 0
+      resp = seed_stocks(input)
+    if !resp
       respond_to do |format|
         format.html { redirect_to root_path, notice: "Unsuccessful seed. File stocks" + input.to_s + ".csv doesn't exist" }
         format.json { render json: {"message": "Unsuccessful seed. File stocks" + input.to_s + ".csv doesn't exist"  }, status: :unprocessable_entity}
       end
     else
-      seed_stocks(input)
-    end
     respond_to do |format|
       format.html { redirect_to root_path, notice: "Seeded stocks with file stocks" + input.to_s + ".csv" }
       format.json { render json: {"message": "Seeded stocks with file stocks" + input.to_s + ".csv"}, status: :created }
     end
+  end
   end
 
   private
