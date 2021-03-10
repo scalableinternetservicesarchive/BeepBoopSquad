@@ -68,6 +68,14 @@ class StocksController < ApplicationController
     end
   end
 
+  def destroy_stocks
+    Stock.destroy_all
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: "All stocks were destroyed" }
+      format.json { render json: {"message": "All stocks were destroyed" }, status: :created }
+    end
+  end
+
   def prd_seed_stocks
     require_relative '../../db/controller_stock_seeding'
     if params[:seed_id].nil?

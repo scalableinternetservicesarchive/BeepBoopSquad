@@ -78,6 +78,14 @@ class UsersController < ApplicationController
   end
   end
 
+  def destroy_users
+    User.destroy_all
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: "All users were destroyed" }
+      format.json { render json: {"message": "All users were destroyed" }, status: :created }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
