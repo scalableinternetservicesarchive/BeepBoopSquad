@@ -1,4 +1,4 @@
 <%= stylesheet_link_tag 'stocks'%>
 <%= render 'shared/background', header: nil, 
-body: (render 'displaystocks', stocks: @stocks),
+body: (render 'displaystocks', new_stock: Stock.new ),
 footer: nil %>

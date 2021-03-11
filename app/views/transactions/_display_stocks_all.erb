@@ -1,0 +1,24 @@
+  <div class="table-scrollable-content">
+  <table class="table table-light">
+  <tbody>
+    <% current_user.stocks_ownership.where("num_shares > ?", 0).each_with_index do |ownership, index| %>
+      <% if index % 2 == 0%>
+      <tr class="table-light">
+        <td><%= ownership.stock.name %></td>
+        <td><%= ownership.stock.symbol %></td>
+        <td><%= ownership.stock.share_price %></td>
+        <td><%= ownership.num_shares %></td>
+      </tr>
+      <% else %>
+      <tr class="table-secondary">
+        <td><%= ownership.stock.name %></td>
+        <td><%= ownership.stock.symbol %></td>
+        <td><%= ownership.stock.share_price %></td>
+        <td><%= ownership.num_shares %></td>
+      </tr>
+      <%end%>
+    <% end %>
+  </tbody>
+  </table>
+  <input type="hidden" id="table-type" name="table-type" value="all">
+  </div>

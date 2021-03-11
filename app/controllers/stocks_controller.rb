@@ -6,7 +6,6 @@ class StocksController < ApplicationController
 
   # GET /stocks or /stocks.json
   def index
-    @stocks = Stock.all
   end
 
   # GET /stocks/1 or /stocks/1.json
@@ -70,6 +69,14 @@ class StocksController < ApplicationController
       format.json { head :no_content }
     end
     expire_page :action => :index
+  end
+
+  def destroy_stocks
+    Stock.destroy_all
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: "All stocks were destroyed" }
+      format.json { render json: {"message": "All stocks were destroyed" }, status: :created }
+    end
   end
 
   def prd_seed_stocks

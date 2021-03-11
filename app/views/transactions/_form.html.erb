@@ -45,10 +45,14 @@
   </div>
   </div>
   <br>
+  <% end %>
+</div>
+
   <div class="bottom">
   <h2>List of Owned Stocks</h2>
   <br>
-  <div>
+  <button id="close-modal-button" onclick="switchTables()" class="btn btn-success btn-block" data-remote="true">Show All Stocks</button>
+  <!--NOTE: not sure if you need data-remote=true or remote=true since the js still works without it-->
   <table id="table-no-padding" class="table table-light">
     <thead class="table-dark">
   <tr>
@@ -59,16 +63,25 @@
   </tr>
   </thead>
   </table>
-  
-  <div class="table-scrollable-content">
-  <table class="table table-light">
-    <%= render partial: 'ownership', collection: @ownerships, cached: true %>
-  </table>
+  <div id="table-placeholder" class ="table-placeholder">
+    <%= render 'display_stocks_limited', current_user: current_user%>
   </div>
-  </div>
-  </div>
-<% end %>
 <%end%>
-</div>
-<div style="clear: both"></div>
 <br>
+</div>
+
+<script>
+function switchTables() {
+var table_display, table_type;
+table_display = document.getElementById("table-placeholder");
+table_type = document.getElementById("table-type");
+if (table_type.value == "limited") {
+  table_display.textContent = '';
+  table_display.insertAdjacentHTML('afterbegin', '<%= escape_javascript(render "display_stocks_all", current_user: current_user)%>');
+  console.log("table_type.value: " + table_type.value);
+}
+else {
+  console.log("table is already ALL: table_type.value: " + table_type.value);
+}
+}
+</script>

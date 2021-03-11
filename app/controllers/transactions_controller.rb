@@ -1,11 +1,12 @@
 class TransactionsController < ApplicationController
   skip_forgery_protection
   before_action :set_transaction, only: %i[ show ]
+  caches_page :new
 
   # GET /transactions or /transactions.json
   def index
-    @transactions = Transaction.all.includes(:stock, :user)
-    @transactions = @transactions.first(100)
+    #@transactions = Transaction.all.includes(:stock, :user)
+    #@transactions = @transactions.first(100)
   end
 
   # GET /transactions/1 or /transactions/1.json
@@ -13,9 +14,6 @@ class TransactionsController < ApplicationController
   end
 
   def new
-    if !current_user.nil?
-      @ownerships = current_user.stocks_ownership.where("num_shares > ?", 0) 
-    end
     @transaction = Transaction.new
   end
 
@@ -24,14 +22,15 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new(user_id: transaction_params[:user_id], stock_id: transaction_params[:stock_id],
                                    num_shares: transaction_params[:num_shares],
                                    transaction_type: transaction_params[:transaction_type])
-    if params[:stock_symbol].present?
-      @transaction.stock = Stock.find_by_symbol params[:stock_symbol] || Stock.first
+    if transaction_params[:stock_symbol].present?
+      @transaction.stock = Stock.find_by_symbol transaction_params[:stock_symbol] || Stock.first
     end
     if @transaction.user.nil?
       @transaction.user = current_user
     end
     respond_to do |format|
       if @transaction.save
+        expire_page :action => :new
         format.html { redirect_to root_path, notice: "Transaction was successfully created." }
         format.json { render :show, status: :created, location: @transaction }
       else
@@ -40,8 +39,6 @@ class TransactionsController < ApplicationController
       end
     end
   end
-
-  private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_transaction
