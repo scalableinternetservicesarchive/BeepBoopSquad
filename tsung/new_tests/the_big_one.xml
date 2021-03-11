@@ -10,29 +10,8 @@
   </servers>
 
   <load>
-    <arrivalphase phase="1" duration="5" unit="second">
-      <users arrivalrate="2" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="2" duration="5" unit="second">
-      <users arrivalrate="4" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="3" duration="5" unit="second">
-      <users arrivalrate="16" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="4" duration="5" unit="second">
-      <users arrivalrate="32" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="5" duration="5" unit="second">
+    <arrivalphase phase="1" duration="60" unit="second">
       <users arrivalrate="64" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="6" duration="15" unit="second">
-      <users arrivalrate="96" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="7" duration="15" unit="second">
-      <users arrivalrate="96" unit="second"/>
-    </arrivalphase>
-    <arrivalphase phase="8" duration="15" unit="second">
-      <users arrivalrate="128" unit="second"/>
     </arrivalphase>
   </load>
 
@@ -50,7 +29,7 @@
 
 
   <sessions>
-    <session name="auditor" probability="100" type="ts_http">
+    <session name="auditor" probability="5" type="ts_http">
       <transaction name="view_transaction_history">
         <request>
           <http url="/transactions"
@@ -74,7 +53,7 @@
 
 
 
-    <session name="stock_viewer" probability="100" type="ts_http">
+    <session name="stock_tracker" probability="100" type="ts_http">
 
       <setdynvars sourcetype="file" fileid="default" delimiter="," order="iter">
         <var name="username" />
@@ -82,8 +61,14 @@
         <var name="balance" />
       </setdynvars>
 
+      <setdynvars sourcetype="file" fileid="stocks" delimiter="," order="iter">
+        <var name="symbol" />
+        <var name="name" />
+        <var name="share_price" />
+      </setdynvars>
+
       <setdynvars sourcetype="random_number" start="1" end="500">
-        <var name="stock_id" />
+        <var name="share_price_2" />
       </setdynvars>
 
       <!-- Log In -->
@@ -129,54 +114,19 @@
       <!-- Wait -->
       <thinktime value="5" random="true"/>
 
-      <!-- View Transactions Page -->
-      <transaction name="visit_transactions_page">
-        <request>
-          <http url="/transactions/new"
-                method="GET"
-          />
-        </request>
-      </transaction>
-
-      <!-- Wait -->
-      <thinktime value="5" random="true"/>
-
-      <!-- Buy Stock -->
-      <transaction name="buy_stock">
+      <!-- Add Stock -->
+      <transaction name="add_stock">
         <request subst="true">
-          <http url="/transactions"
+          <http url="/stocks.json"
                 method="POST"
-                content_type="application/json"
-                contents="{&quot;stock_id&quot;: %%_stock_id%%, &quot;num_shares&quot;: 5, &quot;transaction_type&quot;: &quot;buy&quot;}"
+                content_type='application/json'
+                contents="{&quot;name&quot;: &quot;%%_name%%&quot;, &quot;share_price&quot;:%%_share_price_2%%, &quot;symbol&quot;: &quot;%%_symbol%%&quot;}"
           />
         </request>
       </transaction>
 
       <!-- Wait -->
       <thinktime value="5" random="true"/>
-
-      <!-- View Transactions Page -->
-      <transaction name="visit_transactions_page_2">
-        <request>
-          <http url="/transactions/new"
-                method="GET"
-          />
-        </request>
-      </transaction>
-
-      <!-- Wait -->
-      <thinktime value="5" random="true"/>
-
-      <!-- Sell Stock -->
-      <transaction name="sell_stock">
-        <request subst="true">
-          <http url="/transactions"
-                method="POST"
-                content_type="application/json"
-                contents="{&quot;stock_id&quot;: %%_stock_id%%, &quot;num_shares&quot;: 5, &quot;transaction_type&quot;: &quot;sell&quot;}"
-          />
-        </request>
-      </transaction>
 
     </session>
 
@@ -187,7 +137,7 @@
 
 
 
-    <session name="fundamental_investor" probability="100" type="ts_http">
+    <session name="day_trader" probability="45" type="ts_http">
 
       <setdynvars sourcetype="file" fileid="default" delimiter="," order="iter">
         <var name="username"/>
@@ -287,7 +237,7 @@
 
 
 
-    <session name="registration" probability="100" type="ts_http">
+    <session name="registration" probability="10" type="ts_http">
       <setdynvars sourcetype="erlang" callback="ts_user_server:get_unique_id">
         <var name="username"/>
       </setdynvars>

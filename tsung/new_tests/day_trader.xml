@@ -45,7 +45,7 @@
   </options>
 
   <sessions>
-    <session name="fundamental_investor" probability="100" type="ts_http">
+    <session name="day_trader" probability="100" type="ts_http">
 
       <setdynvars sourcetype="file" fileid="default" delimiter="," order="iter">
         <var name="username"/>
