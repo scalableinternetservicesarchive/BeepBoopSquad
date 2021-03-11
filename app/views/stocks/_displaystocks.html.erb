@@ -6,7 +6,7 @@
         <button id="close-modal-button" onclick="closeModalFunction()" class="close-modal-button">+</button>
         <%= image_tag "money.png", alt: "picture of stonks", class: "image-icon" %>
         <h2>New Stock</h2>
-        <%= form_with(model: new_stock, url: stocks_path, method: :post) do |form| %>
+        <%= form_with(model: Stock.new, url: stocks_path, method: :post) do |form| %>
           <div class="field">
             <%= form.label :name, "Name", class: "label" %>
             <%= form.text_field :name %>

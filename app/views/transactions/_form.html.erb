@@ -62,25 +62,7 @@
   
   <div class="table-scrollable-content">
   <table class="table table-light">
-  <tbody>
-    <% @owned_stocks.each_with_index do |ownership, index| %>
-      <% if index % 2 == 0%>
-      <tr class="table-light">
-        <td><%= ownership.stock.name %></td>
-        <td><%= ownership.stock.symbol %></td>
-        <td><%= ownership.stock.share_price %></td>
-        <td><%= ownership.num_shares %></td>
-      </tr>
-      <% else %>
-      <tr class="table-secondary">
-        <td><%= ownership.stock.name %></td>
-        <td><%= ownership.stock.symbol %></td>
-        <td><%= ownership.stock.share_price %></td>
-        <td><%= ownership.num_shares %></td>
-      </tr>
-      <%end%>
-    <% end %>
-  </tbody>
+    <%= render partial: 'ownership', collection: @ownerships, cached: true %>
   </table>
   </div>
   </div>

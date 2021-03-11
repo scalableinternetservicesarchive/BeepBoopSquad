@@ -1,11 +1,12 @@
 class StocksController < ApplicationController
+  include ActionController::Caching
   skip_forgery_protection
   before_action :set_stock, only: %i[ show edit update destroy ]
+  caches_page :index
 
   # GET /stocks or /stocks.json
   def index
     @stocks = Stock.all
-    @new_stock = Stock.new
   end
 
   # GET /stocks/1 or /stocks/1.json
@@ -37,6 +38,7 @@ class StocksController < ApplicationController
     end
     respond_to do |format|
       if @stock.save
+        expire_page :action => :index
         format.html { redirect_to @stock, notice: "Stock was successfully created." }
         format.json { render :show, status: :created, location: @stock }
       else
@@ -50,6 +52,7 @@ class StocksController < ApplicationController
   def update
     respond_to do |format|
       if @stock.update(stock_params)
+        expire_page :action => :index
         format.html { redirect_to @stock, notice: "Stock was successfully updated." }
         format.json { render :show, status: :ok, location: @stock }
       else
@@ -66,6 +69,7 @@ class StocksController < ApplicationController
       format.html { redirect_to stocks_url, notice: "Stock was successfully destroyed." }
       format.json { head :no_content }
     end
+    expire_page :action => :index
   end
 
   def prd_seed_stocks
