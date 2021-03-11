@@ -75,6 +75,7 @@
 
 
     <session name="stock_viewer" probability="100" type="ts_http">
+
       <setdynvars sourcetype="file" fileid="default" delimiter="," order="iter">
         <var name="username" />
         <var name="password" />
@@ -176,6 +177,7 @@
           />
         </request>
       </transaction>
+
     </session>
 
 
