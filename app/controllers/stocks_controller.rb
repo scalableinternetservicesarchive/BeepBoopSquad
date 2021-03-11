@@ -4,7 +4,7 @@ class StocksController < ApplicationController
 
   # GET /stocks or /stocks.json
   def index
-    @stocks = Stock.all
+    @stocks = Stock.all.first(100)
     @new_stock = Stock.new
   end
 
