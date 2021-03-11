@@ -25,6 +25,8 @@ class TransactionsController < ApplicationController
                                    transaction_type: transaction_params[:transaction_type])
     if params[:stock_symbol].present?
       @transaction.stock = Stock.find_by_symbol params[:stock_symbol] || Stock.first
+    elsif transaction_params[:stock_symbol].present?
+      @transaction.stock = Stock.find_by_symbol transaction_params[:stock_symbol] || Stock.first
     end
     if @transaction.user.nil?
       @transaction.user = current_user

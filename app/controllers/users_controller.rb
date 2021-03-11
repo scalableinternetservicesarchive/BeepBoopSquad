@@ -22,6 +22,15 @@ class UsersController < ApplicationController
 
   # POST /users or /users.json
   def create
+    user = User.all.find { |u| u.name == params[:name] }
+    if !user.nil?
+      respond_to do |format|
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: {"message": "user already exists"}, status: :unprocessable_entity }
+      end
+      return
+    end
+    
     @user = User.new(user_params)
 
     respond_to do |format|
