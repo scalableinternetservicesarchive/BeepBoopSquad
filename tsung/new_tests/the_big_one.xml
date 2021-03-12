@@ -1,0 +1,359 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/local/share/tsung/tsung-1.0.dtd" [] >
+<tsung loglevel="notice">
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers='100000'/>
+  </clients>
+
+  <servers>
+    <server host="BeepBoopSquad.eba-dzbukdri.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
+  </servers>
+
+  <load>
+    <arrivalphase phase="1" duration="60" unit="second">
+      <users arrivalrate="500" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="2" duration="32" unit="second">
+      <users arrivalrate="66" unit="second"/>
+    </arrivalphase>
+  </load>
+
+
+  <options>
+    <option name="file_server" id="default" value="../data/users.csv"/>
+    <option name="file_server" id="stocks" value="../data/stocks5.csv"/>
+    <!-- Set connection timeout to 2 seconds -->
+    <option name="global_ack_timeout" value="2000"/>
+  </options>
+
+
+  <sessions>
+    <session name="auditor" probability="5" type="ts_http">
+      <transaction name="view_transaction_history">
+        <request>
+          <http url="/transactions"
+                method="GET"/>
+        </request>
+      </transaction>
+
+      <thinktime value="3" random="true"/>
+
+      <transaction name="view_exchanges_history">
+        <request subst="true">
+          <http url="/exchanges"
+                method="GET"/>
+        </request>
+      </transaction>
+    </session>
+
+
+    <session name="stock_tracker" probability="40" type="ts_http">
+
+      <setdynvars sourcetype="file" fileid="default" delimiter="," order="iter">
+        <var name="username"/>
+        <var name="password"/>
+        <var name="balance"/>
+      </setdynvars>
+
+      <setdynvars sourcetype="file" fileid="stocks" delimiter="," order="iter">
+        <var name="symbol"/>
+        <var name="name"/>
+        <var name="share_price"/>
+      </setdynvars>
+
+      <setdynvars sourcetype="random_number" start="1" end="500">
+        <var name="share_price_2"/>
+      </setdynvars>
+
+      <!-- Log In -->
+      <transaction name="visit_login_page">
+        <request>
+          <http url="/login"
+                method="GET"
+          />
+        </request>
+      </transaction>
+
+      <transaction name="submit_login_creds">
+        <request subst="true">
+          <http url="/sessions.json"
+                method="POST"
+                content_type="application/json"
+                contents="{&quot;name&quot;: &quot;%%_username%%&quot;, &quot;password&quot;: &quot;%%_password%%&quot;}"
+          />
+        </request>
+      </transaction>
+
+      <!-- Homepage -->
+      <transaction name="visit_homepage">
+        <request>
+          <http url="/"
+                method="GET"
+          />
+        </request>
+      </transaction>
+
+      <!-- Wait -->
+      <thinktime value="5" random="true"/>
+
+      <!-- View Stocks Page -->
+      <transaction name="visit_stocks_page">
+        <request>
+          <http url="/stocks"
+                method="GET"
+          />
+        </request>
+      </transaction>
+
+      <!-- Wait -->
+      <thinktime value="5" random="true"/>
+
+      <!-- Add Stock -->
+      <transaction name="add_stock">
+        <request subst="true">
+          <http url="/stocks.json"
+                method="POST"
+                content_type='application/json'
+                contents="{&quot;name&quot;: &quot;%%_name%%&quot;, &quot;share_price&quot;:%%_share_price_2%%, &quot;symbol&quot;: &quot;%%_symbol%%&quot;}"
+          />
+        </request>
+      </transaction>
+
+      <!-- Wait -->
+      <thinktime value="5" random="true"/>
+
+    </session>
+
+
+    <session name="day_trader" probability="45" type="ts_http">
+
+      <setdynvars sourcetype="file" fileid="default" delimiter="," order="iter">
+        <var name="username"/>
+        <var name="password"/>
+        <var name="balance"/>
+      </setdynvars>
+
+      <setdynvars sourcetype="random_number" start="1" end="500">
+        <var name="stock_id"/>
+      </setdynvars>
+
+      <setdynvars sourcetype="file" fileid="stocks" delimiter="," order="iter">
+        <var name="stock_symbol"/>
+        <var name="stock_name"/>
+        <var name="stock_share_price"/>
+      </setdynvars>
+
+      <!-- Log In -->
+      <transaction name="visit_login_page">
+        <request>
+          <http url="/login"
+                method="GET"
+          />
+        </request>
+      </transaction>
+
+      <transaction name="submit_login_creds">
+        <request subst="true">
+          <http url="/sessions.json"
+                method="POST"
+                content_type="application/json"
+                contents="{&quot;name&quot;: &quot;%%_username%%&quot;, &quot;password&quot;: &quot;%%_password%%&quot;}"
+          />
+        </request>
+      </transaction>
+
+      <!-- Homepage -->
+      <transaction name="visit_homepage">
+        <request>
+          <http url="/"
+                method="GET"
+          />
+        </request>
+      </transaction>
+
+      <!-- Wait -->
+      <thinktime value="5" random="true"/>
+
+      <!-- View Transactions Page -->
+      <transaction name="view_new_transactions_page">
+        <request>
+          <http url="/transactions/new"
+                method="GET"
+          />
+        </request>
+      </transaction>
+
+      <!-- Buy Stock -->
+      <transaction name="buy_stock">
+        <request subst="true">
+          <http url="/transactions"
+                method="POST"
+                content_type="application/json"
+                contents="{&quot;stock_symbol&quot;: &quot;%%_stock_symbol%%&quot;, &quot;num_shares&quot;: 5, &quot;transaction_type&quot;: &quot;buy&quot;}"
+          />
+        </request>
+      </transaction>
+
+      <!-- Wait -->
+      <thinktime value="5" random="true"/>
+
+      <!-- View Transactions Page -->
+      <transaction name="view_new_transactions_page_2">
+        <request>
+          <http url="/transactions/new"
+                method="GET"
+          />
+        </request>
+      </transaction>
+
+      <!-- Sell Stock -->
+      <transaction name="sell_stock">
+        <request subst="true">
+          <http url="/transactions"
+                method="POST"
+                content_type="application/json"
+                contents="{&quot;stock_symbol&quot;: &quot;%%_stock_symbol%%&quot;, &quot;num_shares&quot;: 5, &quot;transaction_type&quot;: &quot;sell&quot;}"
+          />
+        </request>
+      </transaction>
+    </session>
+
+
+    <session name="registration" probability="10" type="ts_http">
+      <setdynvars sourcetype="erlang" callback="ts_user_server:get_unique_id">
+        <var name="username"/>
+      </setdynvars>
+
+      <!-- Homepage -->
+      <request>
+        <http url="/"
+              method="GET"
+        />
+      </request>
+
+      <!-- Sign Up -->
+      <transaction name="sign_up">
+        <request subst="true">
+          <http url="/users.json"
+                method="POST"
+                content_type="application/json"
+                contents="{&quot;name&quot;: &quot;%%_username%%&quot;, &quot;password&quot;: &quot;password&quot;, &quot;cash_balance&quot;: 15000}"
+          />
+        </request>
+      </transaction>
+
+      <!-- Login -->
+      <transaction name="login">
+        <request subst="true">
+          <http url="/sessions.json"
+                method="POST"
+                content_type="application/json"
+                contents="{&quot;name&quot;: &quot;%%_username%%&quot;, &quot;password&quot;: &quot;password&quot;}"
+          />
+        </request>
+      </transaction>
+
+      <!-- Homepage -->
+      <request>
+        <http url="/"
+              method="GET"
+        />
+      </request>
+
+      <!-- Wait -->
+      <thinktime value="5" random="true"/>
+
+      <!-- Visit Exchanges Endpoint -->
+      <transaction name="visit_new_exchange_page">
+        <request>
+          <http url="/exchanges/new"
+                method="GET"
+          />
+        </request>
+      </transaction>
+
+
+      <!-- Wait -->
+      <thinktime value="5" random="true"/>
+
+      <!-- Make Deposit -->
+      <transaction name="make_deposit">
+        <request>
+          <http url="/exchanges.json"
+                method="POST"
+                content_type='application/json'
+                contents_from_file="../request_body/exchanges_body.json"
+          />
+        </request>
+      </transaction>
+
+      <thinktime value="5" random="true"/>
+
+      <!-- Make Deposit -->
+      <transaction name="make_deposit_2">
+        <request>
+          <http url="/exchanges.json"
+                method="POST"
+                content_type='application/json'
+                contents_from_file="../request_body/exchanges_body.json"
+          />
+        </request>
+      </transaction>
+
+      <thinktime value="5" random="true"/>
+
+      <!-- Make Deposit -->
+      <transaction name="make_withdrawal">
+        <request>
+          <http url="/exchanges.json"
+                method="POST"
+                content_type='application/json'
+                contents_from_file="../request_body/withdraw_body.json"
+          />
+        </request>
+      </transaction>
+
+      <thinktime value="5" random="true"/>
+
+      <!-- Make Deposit -->
+      <transaction name="make_deposit_3">
+        <request>
+          <http url="/exchanges.json"
+                method="POST"
+                content_type='application/json'
+                contents_from_file="../request_body/exchanges_body.json"
+          />
+        </request>
+      </transaction>
+
+      <thinktime value="5" random="true"/>
+
+      <!-- Make Deposit -->
+      <transaction name="make_withdrawal_2">
+        <request>
+          <http url="/exchanges.json"
+                method="POST"
+                content_type='application/json'
+                contents_from_file="../request_body/withdraw_body.json"
+          />
+        </request>
+      </transaction>
+
+      <thinktime value="5" random="true"/>
+
+      <!-- Make Deposit -->
+      <transaction name="make_withdrawal_3">
+        <request>
+          <http url="/exchanges.json"
+                method="POST"
+                content_type='application/json'
+                contents_from_file="../request_body/withdraw_body.json"
+          />
+        </request>
+      </transaction>
+    </session>
+
+
+  </sessions>
+</tsung>
