@@ -13,10 +13,6 @@
     <arrivalphase phase="1" duration="60" unit="second">
       <users arrivalrate="500" unit="second"/>
     </arrivalphase>
-
-    <arrivalphase phase="2" duration="32" unit="second">
-      <users arrivalrate="66" unit="second"/>
-    </arrivalphase>
   </load>
 
 
@@ -26,6 +22,10 @@
     <!-- Set connection timeout to 2 seconds -->
     <option name="global_ack_timeout" value="2000"/>
   </options>
+
+
+
+
 
 
   <sessions>
@@ -48,22 +48,27 @@
     </session>
 
 
+
+
+
+
+
     <session name="stock_tracker" probability="40" type="ts_http">
 
       <setdynvars sourcetype="file" fileid="default" delimiter="," order="iter">
-        <var name="username"/>
-        <var name="password"/>
-        <var name="balance"/>
+        <var name="username" />
+        <var name="password" />
+        <var name="balance" />
       </setdynvars>
 
       <setdynvars sourcetype="file" fileid="stocks" delimiter="," order="iter">
-        <var name="symbol"/>
-        <var name="name"/>
-        <var name="share_price"/>
+        <var name="symbol" />
+        <var name="name" />
+        <var name="share_price" />
       </setdynvars>
 
       <setdynvars sourcetype="random_number" start="1" end="500">
-        <var name="share_price_2"/>
+        <var name="share_price_2" />
       </setdynvars>
 
       <!-- Log In -->
@@ -124,6 +129,12 @@
       <thinktime value="5" random="true"/>
 
     </session>
+
+
+
+
+
+
 
 
     <session name="day_trader" probability="45" type="ts_http">
@@ -218,6 +229,12 @@
         </request>
       </transaction>
     </session>
+
+
+
+
+
+
 
 
     <session name="registration" probability="10" type="ts_http">
