@@ -11,7 +11,7 @@
 
   <load>
     <arrivalphase phase="1" duration="60" unit="second">
-      <users arrivalrate="64" unit="second"/>
+      <users arrivalrate="500" unit="second"/>
     </arrivalphase>
   </load>
 
@@ -53,7 +53,7 @@
 
 
 
-    <session name="stock_tracker" probability="100" type="ts_http">
+    <session name="stock_tracker" probability="40" type="ts_http">
 
       <setdynvars sourcetype="file" fileid="default" delimiter="," order="iter">
         <var name="username" />
@@ -372,8 +372,5 @@
     </session>
 
 
-
-
-    
   </sessions>
 </tsung>
